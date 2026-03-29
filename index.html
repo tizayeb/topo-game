@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topo Game - Noord-Holland, Zuid-Holland & Utrecht</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #menu-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: none;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        #menu-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        #lang-select {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Region Selection Overlay */
+        #region-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            color: white;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #region-overlay h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .region-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        @media (min-width: 600px) {
+            .region-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .region-card {
+            background: white;
+            color: var(--primary);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .region-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .region-card h3 {
+            font-size: 1.5rem;
+        }
+
+        .region-card .map-preview {
+            width: 100%;
+            height: 150px;
+            background-color: #eee;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #game-wrapper {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        @media (min-width: 800px) {
+            #game-wrapper {
+                flex-direction: row-reverse;
+            }
+        }
+
+        #map-container {
+            flex: 1;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 2px solid #ccc;
+        }
+
+        @media (min-width: 800px) {
+            #map-container {
+                flex: 0 0 50%;
+                border-bottom: none;
+                border-left: 2px solid #ccc;
+            }
+        }
+
+        #map-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #game-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .stats div span {
+            color: var(--accent);
+        }
+
+        #lives-display {
+            color: #e74c3c !important;
+            letter-spacing: 2px;
+        }
+
+        #question-display {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        #question-display span {
+            font-weight: 600;
+            color: var(--primary);
+            padding: 12px 20px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #bbdefb;
+        }
+
+        .controls {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        button {
+            padding: 15px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button.correct {
+            background-color: var(--success) !important;
+            color: white;
+            border-color: #1e8449;
+        }
+
+        button.incorrect {
+            background-color: var(--error) !important;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        #hard-mode-input {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            padding: 15px;
+            font-size: 1.1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+        }
+
+        input[type="text"].incorrect-text {
+            border-color: var(--error);
+            color: var(--error);
+            font-weight: bold;
+        }
+
+        #toggle-mode {
+            background: none;
+            box-shadow: none;
+            color: var(--accent);
+            text-decoration: underline;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding: 5px;
+        }
+
+        #feedback-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .flash-correct {
+            background-color: rgba(39, 174, 96, 0.2);
+            opacity: 1 !important;
+        }
+
+        .flash-incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            opacity: 1 !important;
+        }
+
+        /* Balloon Celebration Styles */
+        #balloon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 2000;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 60px;
+            height: 75px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatUp 3s ease-in forwards;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            width: 2px;
+            height: 30px;
+            background: rgba(0,0,0,0.2);
+            transform: translateX(-50%);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50vh) translateX(20px);
+            }
+            100% {
+                transform: translateY(-120vh) translateX(-20px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="feedback-overlay"></div>
+    <div id="balloon-container"></div>
+
+    <div id="region-overlay">
+        <h2 id="label-select-region">Select Your Region</h2>
+        <div class="region-grid">
+            <div class="region-card" onclick="selectRegion('west')">
+                <div class="map-preview" style="background-image: url('IMG_9648.JPG');"></div>
+                <h3 id="label-west">West-Nederland</h3>
+            </div>
+            <div class="region-card" onclick="selectRegion('south')">
+                <div class="map-preview" style="background-image: url('Zuid/map-south.jpg');"></div>
+                <h3 id="label-south">Zuid-Nederland</h3>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <h1>TopoTrainer.nl</h1>
+        <div class="header-right">
+            <div id="menu-btn" onclick="showMenu()">Menu</div>
+            <select id="lang-select">
+                <option value="en">English</option>
+                <option value="nl">Nederlands</option>
+                <option value="tr">Türkçe</option>
+            </select>
+        </div>
+    </header>
+
+    <div id="game-wrapper">
+        <div id="map-container">
+            <img id="map-img" src="IMG_9648.JPG" alt="Topological Map">
+        </div>
+
+
+        <div id="game-container">
+            <div class="stats">
+                <div><span id="label-score">Score</span>: <span id="session-score">0</span></div>
+                <div><span id="label-wrong">Wrong</span>: <span id="wrong-score">0</span></div>
+                <div><span id="label-lives">Lives</span>: <span id="lives-display">❤️❤️❤️</span></div>
+                <div><span id="label-best">Best Streak</span>: <span id="best-streak">0</span></div>
+                <div style="font-size: 0.8rem; color: #666;"><span id="label-streak">Streak</span>: <span id="current-streak">0</span></div>
+            </div>
+
+            <div id="question-display">
+                <span id="question-text">?</span>
+            </div>
+
+            <div class="controls">
+                <div id="multiple-choice" class="options-grid">
+                    <!-- Options will be injected here -->
+                </div>
+
+                <div id="hard-mode-input">
+                    <input type="text" id="text-answer" placeholder="Type location name..." autocomplete="off">
+                    <button id="submit-answer" style="background-color: var(--accent); color: white;">Submit</button>
+                </div>
+
+                <button id="toggle-mode">Switch to Hard Mode</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                find: "Find the location for",
+                hardMode: "Switch to Hard Mode",
+                mcMode: "Switch to Multiple Choice",
+                placeholder: "Type location name...",
+                submit: "Submit",
+                score: "Score",
+                wrong: "Wrong",
+                best: "Best Streak",
+                streak: "Streak",
+                incorrect: "Incorrect! It was",
+                lives: "Lives",
+                shield: "Shield Used! Try again!",
+                selectRegion: "Select Your Region",
+                west: "West Netherlands",
+                south: "South Netherlands",
+                menu: "Menu"
+            },
+            nl: {
+                find: "Zoek de locatie voor",
+                hardMode: "Schakel naar Hard Mode",
+                mcMode: "Schakel naar Meerkeuze",
+                placeholder: "Type de naam van de locatie...",
+                submit: "Versturen",
+                score: "Score",
+                wrong: "Fout",
+                best: "Beste Reeks",
+                streak: "Reeks",
+                incorrect: "Onjuist! Het was",
+                lives: "Levens",
+                shield: "Schild Gebruikt! Probeer opnieuw!",
+                selectRegion: "Selecteer Je Regio",
+                west: "West-Nederland",
+                south: "Zuid-Nederland",
+                menu: "Menu"
+            },
+            tr: {
+                find: "Şu konumun yerini bul",
+                hardMode: "Zor Mod'a Geç",
+                mcMode: "Çoktan Seçmeli Mod'a Geç",
+                placeholder: "Konum adını yazın...",
+                submit: "Gönder",
+                score: "Puan",
+                wrong: "Yanlış",
+                best: "En İyi Seri",
+                streak: "Seri",
+                incorrect: "Yanlış! Cevap şuydu",
+                lives: "Canlar",
+                shield: "Kalkan Kullanıldı! Tekrar dene!",
+                selectRegion: "Bölgeni Seç",
+                west: "Batı Hollanda",
+                south: "Güney Hollanda",
+                menu: "Menü"
+            }
+        };
+
+        const regions = {
+            west: {
+                name: "West-Nederland",
+                image: "IMG_9648.JPG",
+                data: [
+                    { id: "A", name: "Noord-Holland" },
+                    { id: "B", name: "Zuid-Holland" },
+                    { id: "C", name: "Utrecht" },
+                    { id: "1", name: "Amsterdam" },
+                    { id: "2", name: "Haarlem" },
+                    { id: "3", name: "Utrecht (Stad)" },
+                    { id: "4", name: "Den Haag" },
+                    { id: "5", name: "Den Helder" },
+                    { id: "6", name: "Enkhuizen" },
+                    { id: "7", name: "Alkmaar" },
+                    { id: "8", name: "Purmerend" },
+                    { id: "9", name: "Zaandam" },
+                    { id: "10", name: "Amstelveen" },
+                    { id: "11", name: "Hilversum" },
+                    { id: "12", name: "Amersfoort" },
+                    { id: "13", name: "Leiden" },
+                    { id: "14", name: "Alphen aan den Rijn" },
+                    { id: "15", name: "Zoetermeer" },
+                    { id: "16", name: "Gouda" },
+                    { id: "17", name: "Delft" },
+                    { id: "18", name: "Rotterdam" },
+                    { id: "19", name: "Dordrecht" },
+                    { id: "a", name: "Noordzee" },
+                    { id: "b", name: "Waddenzee" },
+                    { id: "c", name: "Afsluitdijk" },
+                    { id: "d", name: "IJsselmeer" },
+                    { id: "e", name: "Markermeer" },
+                    { id: "f", name: "Noordzeekanaal" },
+                    { id: "g", name: "Amsterdam-Rijnkanaal" },
+                    { id: "h", name: "Lek" },
+                    { id: "i", name: "Nieuwe Waterweg" },
+                    { id: "D", name: "Texel" },
+                    { id: "E", name: "Randstad" },
+                    { id: "F", name: "Haarlemmermeer" },
+                    { id: "G", name: "Schiphol" },
+                    { id: "H", name: "Rijnmond" },
+                    { id: "AM", name: "Almere" },
+                    { id: "DB", name: "De Bilt" },
+                    { id: "MV", name: "Maasvlakte" },
+                    { id: "WF", name: "West-Friesland" },
+                    { id: "WL", name: "Westland" },
+                    // Spatial Questions
+                    { question: { en: "Which city is 20km west of Amsterdam (1)?", nl: "Welke stad ligt 20 km ten westen van Amsterdam (1)?", tr: "Amsterdam'ın (1) 20 km batısındaki şehir hangisidir?" }, name: "Haarlem" },
+                    { question: { en: "What is the name of the city 10km south of Amsterdam (1)?", nl: "Wat is de naam van de stad 10 km ten zuiden van Amsterdam (1)?", tr: "Amsterdam'ın (1) 10 km güneyindeki şehrin adı nedir?" }, name: "Amstelveen" },
+                    { question: { en: "Which city is 25km east of Utrecht (3)?", nl: "Welke stad ligt 25 km ten oosten van Utrecht (3)?", tr: "Utrecht'in (3) 25 km doğusundaki şehir hangisidir?" }, name: "Amersfoort" },
+                    { question: { en: "Which city is 15km south of Leiden (13)?", nl: "Welke stad ligt 15 km ten zuiden van Leiden (13)?", tr: "Leiden'ın (13) 15 km güneyindeki şehir hangisidir?" }, name: "Zoetermeer" },
+                    { question: { en: "What city is 10km between Den Haag (4) and Rotterdam (18)?", nl: "Welke stad ligt op 10 km tussen Den Haag (4) en Rotterdam (18)?", tr: "Den Haag (4) ile Rotterdam (18) arasındaki 10 km mesafedeki şehir hangisidir?" }, name: "Delft" },
+                    { question: { en: "Which island is 5km north of Den Helder (5)?", nl: "Welk eiland ligt 5 km ten noorden van Den Helder (5)?", tr: "Den Helder'in (5) 5 km kuzeyindeki ada hangisidir?" }, name: "Texel" },
+                    { question: { en: "What water is west of Noord-Holland (A)?", nl: "Welk water ligt ten westen van Noord-Holland (A)?", tr: "Noord-Holland'ın (A) batısındaki su kütlesi nedir?" }, name: "Noordzee" },
+                    { question: { en: "Which city is 10km north of Amsterdam (1)?", nl: "Welke stad ligt 10 km ten noorden van Amsterdam (1)?", tr: "Amsterdam'ın (1) 10 km kuzeyindeki şehir hangisidir?" }, name: "Zaandam" },
+                    { question: { en: "Which city is 10km north of Zaandam (9)?", nl: "Welke stad ligt 10 km ten noorden van Zaandam (9)?", tr: "Zaandam'ın (9) 10 km kuzeyindeki şehir hangisidir?" }, name: "Purmerend" },
+                    { question: { en: "Which city is 15km west of Hilversum (11)?", nl: "Welke stad ligt 15 km ten westen van Hilversum (11)?", tr: "Hilversum'un (11) 15 km batısındaki şehir hangisidir?" }, name: "Amstelveen" },
+                    { question: { en: "Which city is 20km east of Hilversum (11)?", nl: "Welke stad ligt 20 km ten oosten van Hilversum (11)?", tr: "Hilversum'un (11) 20 km doğusundaki şehir hangisidir?" }, name: "Amersfoort" },
+                    { question: { en: "What city is 15km south of Haarlem (2)?", nl: "Welke stad ligt 15 km ten zuiden van Haarlem (2)?", tr: "Haarlem'in (2) 15 km güneyindeki şehir hangisidir?" }, name: "Leiden" },
+                    { question: { en: "What city is 30km south of Alkmaar (7)?", nl: "Welke stad ligt 30 km ten zuiden van Alkmaar (7)?", tr: "Alkmaar'ın (7) 30 km güneyindeki şehir hangisidir?" }, name: "Haarlem" },
+                    { question: { en: "Which city is 15km east of Den Haag (4)?", nl: "Welke stad ligt 15 km ten oosten van Den Haag (4)?", tr: "Den Haag'ın (4) 15 km doğusundaki şehir hangisidir?" }, name: "Zoetermeer" },
+                    { question: { en: "Which city is 15km north of Rotterdam (18)?", nl: "Welke stad ligt 15 km ten noorden van Rotterdam (18)?", tr: "Rotterdam'ın (18) 15 km kuzeyindeki şehir hangisidir?" }, name: "Delft" },
+                    { question: { en: "Which city is 20km south of Rotterdam (18)?", nl: "Welke stad ligt 20 km ten zuiden van Rotterdam (18)?", tr: "Rotterdam'ın (18) 20 km güneyindeki şehir hangisidir?" }, name: "Dordrecht" },
+                    { question: { en: "Which city is 20km east of Rotterdam (18)?", nl: "Welke stad ligt 20 km ten oosten van Rotterdam (18)?", tr: "Rotterdam'ın (18) 20 km doğusundaki şehir hangisidir?" }, name: "Gouda" },
+                    { question: { en: "What city is 15km north of Gouda (16)?", nl: "Welke stad ligt 15 km ten noorden van Gouda (16)?", tr: "Gouda'nın (16) 15 km kuzeyindeki şehir hangisidir?" }, name: "Alphen aan den Rijn" },
+                    { question: { en: "Which city is 15km west of Alphen aan den Rijn (14)?", nl: "Welke stad ligt 15 km ten westen van Alphen aan den Rijn (14)?", tr: "Alphen aan den Rijn'in (14) 15 km batısındaki şehir hangisidir?" }, name: "Leiden" },
+                    { question: { en: "What city is 15km east of Alphen aan den Rijn (14)?", nl: "Welke stad ligt 15 km ten oosten van Alphen aan den Rijn (14)?", tr: "Alphen aan den Rijn'in (14) 15 km doğusundaki şehir hangisidir?" }, name: "Gouda" },
+                    { question: { en: "What city is 35km south of Den Helder (5)?", nl: "Welke stad ligt 35 km ten zuiden van Den Helder (5)?", tr: "Den Helder'in (5) 35 km güneyindeki şehir hangisidir?" }, name: "Alkmaar" },
+                    { question: { en: "What city is 40km east of Alkmaar (7)?", nl: "Welke stad ligt 40 km ten oosten van Alkmaar (7)?", tr: "Alkmaar'ın (7) 40 km doğusundaki şehir hangisidir?" }, name: "Enkhuizen" },
+                    { question: { en: "What water is 15km between Enkhuizen (6) and Almere (AM)?", nl: "Welk water ligt op 15 km tussen Enkhuizen (6) en Almere (AM)?", tr: "Enkhuizen (6) ile Almere (AM) arasındaki 15 km mesafedeki su kütlesi nedir?" }, name: "Markermeer" },
+                    { question: { en: "What city is 25km east of Amsterdam (1) across the water?", nl: "Welke stad ligt 25 km ten oosten van Amsterdam (1) over het water?", tr: "Amsterdam'ın (1) suyun karşısındaki 25 km doğusundaki şehir hangisidir?" }, name: "Almere" },
+                    { question: { en: "What city is 20km north of Dordrecht (19)?", nl: "Welke stad ligt 20 km ten noorden van Dordrecht (19)?", tr: "Dordrecht'in (19) 20 km kuzeyindeki şehir hangisidir?" }, name: "Rotterdam" },
+                    { question: { en: "Which area is 15km west of Rotterdam (18)?", nl: "Welk gebied ligt 15 km ten westen van Rotterdam (18)?", tr: "Rotterdam'ın (18) 15 km batısındaki bölge hangisidir?" }, name: "Westland" },
+                    { question: { en: "What is the area around Amsterdam, Den Haag, and Rotterdam called?", nl: "Hoe heet het gebied rond Amsterdam, Den Haag en Rotterdam?", tr: "Amsterdam, Den Haag ve Rotterdam çevresindeki bölgeye ne ad verilir?" }, name: "Randstad" },
+                    { question: { en: "Which city is 15km east of De Bilt (DB)?", nl: "Welke stad ligt 15 km ten oosten van De Bilt (DB)?", tr: "De Bilt'in (DB) 15 km doğusundaki şehir hangisidir?" }, name: "Amersfoort" },
+                    { question: { en: "Which city is 25km south of Amstelveen (10)?", nl: "Welke stad ligt 25 km ten zuiden van Amstelveen (10)?", tr: "Amstelveen'in (10) 25 km güneyindeki şehir hangisidir?" }, name: "Alphen aan den Rijn" },
+                    { question: { en: "What city is 20km north of Amersfoort (12)?", nl: "Welke stad ligt 20 km ten noorden van Amersfoort (12)?", tr: "Amersfoort'un (12) 20 km kuzeyindeki şehir hangisidir?" }, name: "Hilversum" }
+                ]
+            },
+            south: {
+                name: "Zuid-Nederland",
+                image: "Zuid/map-south.jpg",
+                data: [
+                    { id: "A", name: "Zeeland" },
+                    { id: "B", name: "Noord-Brabant" },
+                    { id: "C", name: "Limburg" },
+                    { id: "1", name: "Middelburg" },
+                    { id: "2", name: "'s-Hertogenbosch" },
+                    { id: "3", name: "Maastricht" },
+                    { id: "4", name: "Vlissingen" },
+                    { id: "5", name: "Terneuzen" },
+                    { id: "6", name: "Bergen op Zoom" },
+                    { id: "7", name: "Roosendaal" },
+                    { id: "8", name: "Breda" },
+                    { id: "9", name: "Tilburg" },
+                    { id: "10", name: "Oss" },
+                    { id: "11", name: "Helmond" },
+                    { id: "12", name: "Eindhoven" },
+                    { id: "13", name: "Venlo" },
+                    { id: "14", name: "Roermond" },
+                    { id: "15", name: "Heerlen" },
+                    { id: "a", name: "Maas" },
+                    { id: "b", name: "Oosterschelde" },
+                    { id: "c", name: "Westerschelde" },
+                    { id: "d", name: "Schelde" },
+                    { id: "e", name: "Noordzee" },
+                    { id: "D", name: "Zeeuws-Vlaanderen" },
+                    { id: "E", name: "Biesbos" },
+                    { id: "f", name: "Vaalserberg" },
+                    { id: "BE", name: "België" },
+                    { id: "DU", name: "Duitsland" },
+                    { id: "EF", name: "Efteling" },
+                    // Spatial Questions
+                    { question: { en: "What is the name of the place 5km north of Vlissingen (4)?", nl: "Wat is de naam van de plaats 5 km ten noorden van Vlissingen (4)?", tr: "Vlissingen'in (4) 5 km kuzeyindeki yerin adı nedir?" }, name: "Middelburg" },
+                    { question: { en: "Which city is 20km east of Middelburg (1)?", nl: "Welke stad ligt 20 km ten oosten van Middelburg (1)?", tr: "Middelburg'un (1) 20 km doğusundaki şehir hangisidir?" }, name: "Bergen op Zoom" },
+                    { question: { en: "What city is 10km south of Middelburg (1) across the water?", nl: "Welke stad ligt 10 km ten zuiden van Middelburg (1) over het water?", tr: "Middelburg'un (1) suyun karşısındaki 10 km güneyindeki şehir hangisidir?" }, name: "Terneuzen" },
+                    { question: { en: "Which city is 15km east of Bergen op Zoom (6)?", nl: "Welke stad ligt 15 km ten oosten van Bergen op Zoom (6)?", tr: "Bergen op Zoom'un (6) 15 km doğusundaki şehir hangisidir?" }, name: "Roosendaal" },
+                    { question: { en: "Which city is 25km east of Roosendaal (7)?", nl: "Welke stad ligt 25 km ten oosten van Roosendaal (7)?", tr: "Roosendaal'ın (7) 25 km doğusundaki şehir hangisidir?" }, name: "Breda" },
+                    { question: { en: "Which city is 20km east of Breda (8)?", nl: "Welke stad ligt 20 km ten oosten van Breda (8)?", tr: "Breda'nın (8) 20 km doğusundaki şehir hangisidir?" }, name: "Tilburg" },
+                    { question: { en: "Which city is 25km north of Tilburg (9)?", nl: "Welke stad ligt 25 km ten noorden van Tilburg (9)?", tr: "Tilburg'un (9) 25 km kuzeyindeki şehir hangisidir?" }, name: "'s-Hertogenbosch" },
+                    { question: { en: "Which city is 15km east of 's-Hertogenbosch (2)?", nl: "Welke stad ligt 15 km ten oosten van 's-Hertogenbosch (2)?", tr: "'s-Hertogenbosch'un (2) 15 km doğusundaki şehir hangisidir?" }, name: "Oss" },
+                    { question: { en: "Which city is 20km south of Oss (10)?", nl: "Welke stad ligt 20 km ten zuiden van Oss (10)?", tr: "Oss'un (10) 20 km güneyindeki şehir hangisidir?" }, name: "Helmond" },
+                    { question: { en: "Which city is 15km west of Helmond (11)?", nl: "Welke stad ligt 15 km ten westen van Helmond (11)?", tr: "Helmond'un (11) 15 km batısındaki şehir hangisidir?" }, name: "Eindhoven" },
+                    { question: { en: "Which city is 80km south of Eindhoven (12)?", nl: "Welke stad ligt 80 km ten zuiden van Eindhoven (12)?", tr: "Eindhoven'ın (12) 80 km güneyindeki şehir hangisidir?" }, name: "Maastricht" },
+                    { question: { en: "Which city is 40km north of Maastricht (3)?", nl: "Welke stad ligt 40 km ten noorden van Maastricht (3)?", tr: "Maastricht'in (3) 40 km kuzeyindeki şehir hangisidir?" }, name: "Roermond" },
+                    { question: { en: "Which city is 25km north of Roermond (14)?", nl: "Welke stad ligt 25 km ten noorden van Roermond (14)?", tr: "Roermond'un (14) 25 km kuzeyindeki şehir hangisidir?" }, name: "Venlo" },
+                    { question: { en: "Which city is 20km south of Roermond (14)?", nl: "Welke stad ligt 20 km ten zuiden van Roermond (14)?", tr: "Roermond'un (14) 20 km güneyindeki şehir hangisidir?" }, name: "Heerlen" },
+                    { question: { en: "What mountain is 10km south of Heerlen (15)?", nl: "Welke berg ligt 10 km ten zuiden van Heerlen (15)?", tr: "Heerlen'ın (15) 10 km güneyindeki dağ hangisidir?" }, name: "Vaalserberg" },
+                    { question: { en: "What area is in the south of Zeeland (A)?", nl: "Welk gebied ligt in het zuiden van Zeeland (A)?", tr: "Zeeland'ın (A) güneyindeki bölge hangisidir?" }, name: "Zeeuws-Vlaanderen" },
+                    { question: { en: "What water is north of Zeeuws-Vlaanderen (D)?", nl: "Welk water ligt ten noorden van Zeeuws-Vlaanderen (D)?", tr: "Zeeuws-Vlaanderen'ın (D) kuzeyindeki su kütlesi nedir?" }, name: "Westerschelde" },
+                    { question: { en: "What water is between Zeeland (A) and Noord-Brabant (B)?", nl: "Welk water ligt tussen Zeeland (A) en Noord-Brabant (B)?", tr: "Zeeland (A) ile Noord-Brabant (B) arasındaki su kütlesi nedir?" }, name: "Oosterschelde" },
+                    { question: { en: "What river flows through Limburg (C)?", nl: "Welke rivier stroomt door Limburg (C)?", tr: "Limburg'dan (C) geçen nehir hangisidir?" }, name: "Maas" },
+                    { question: { en: "What area is 10km north of Breda (8)?", nl: "Welk gebied ligt 10 km ten noorden van Breda (8)?", tr: "Breda'nın (8) 10 km kuzeyindeki bölge hangisidir?" }, name: "Biesbos" },
+                    { question: { en: "What country is south of the Netherlands (BE)?", nl: "Welk land ligt ten zuiden van Nederland (BE)?", tr: "Hollanda'nın (BE) güneyindeki ülke hangisidir?" }, name: "België" },
+                    { question: { en: "What country is east of the Netherlands (DU)?", nl: "Welk land ligt ten oosten van Nederland (DU)?", tr: "Hollanda'nın (DU) doğusundaki ülke hangisidir?" }, name: "Duitsland" },
+                    { question: { en: "What theme park is 15km north of Tilburg (9)?", nl: "Welk pretpark ligt 15 km ten noorden van Tilburg (9)?", tr: "Tilburg'un (9) 15 km kuzeyindeki tema parkı hangisidir?" }, name: "Efteling" },
+                    { question: { en: "Which city is 40km north of Eindhoven (12)?", nl: "Welke stad ligt 40 km ten noorden van Eindhoven (12)?", tr: "Eindhoven'ın (12) 40 km kuzeyindeki şehir hangisidir?" }, name: "'s-Hertogenbosch" },
+                    { question: { en: "Which city is 25km west of Breda (8)?", nl: "Welke stad ligt 25 km ten westen van Breda (8)?", tr: "Breda'nın (8) 25 km batısındaki şehir hangisidir?" }, name: "Roosendaal" },
+                    { question: { en: "Which city is east of Venlo (13)?", nl: "Welke stad ligt ten oosten van Venlo (13)?", tr: "Venlo'nun (13) doğusundaki şehir hangisidir?" }, name: "Duitsland" },
+                    { question: { en: "Which place is west of Vlissingen (4)?", nl: "Welke plaats ligt ten westen van Vlissingen (4)?", tr: "Vlissingen'in (4) batısındaki yer hangisidir?" }, name: "Noordzee" },
+                    { question: { en: "Which city is in the southeast?", nl: "Welke stad ligt in het zuidoosten?", tr: "Güneydoğudaki şehir hangisidir?" }, name: "Heerlen" },
+                    { question: { en: "Which province is in the southwest?", nl: "Welke provincie ligt in het zuidwesten?", tr: "Güneybatıdaki il hangisidir?" }, name: "Zeeland" },
+                    { question: { en: "Which province is between Zeeland and Limburg?", nl: "Welke provincie ligt tussen Zeeland en Limburg?", tr: "Zeeland ile Limburg arasındaki il hangisidir?" }, name: "Noord-Brabant" }
+                ]
+            }
+        };
+
+        let state = {
+            currentRegion: null,
+            currentQuestion: null,
+            sessionScore: 0,
+            wrongScore: 0,
+            currentStreak: 0,
+            bestStreak: 0,
+            lives: 3,
+            isHardMode: false,
+            waiting: false,
+            lang: 'en'
+        };
+
+        // DOM Elements
+        const sessionScoreEl = document.getElementById('session-score');
+        const wrongScoreEl = document.getElementById('wrong-score');
+        const livesDisplayEl = document.getElementById('lives-display');
+        const bestStreakEl = document.getElementById('best-streak');
+        const currentStreakEl = document.getElementById('current-streak');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsGrid = document.getElementById('multiple-choice');
+        const hardModeInput = document.getElementById('hard-mode-input');
+        const textAnswerInput = document.getElementById('text-answer');
+        const submitBtn = document.getElementById('submit-answer');
+        const toggleModeBtn = document.getElementById('toggle-mode');
+        const feedbackOverlay = document.getElementById('feedback-overlay');
+        const langSelect = document.getElementById('lang-select');
+        const balloonContainer = document.getElementById('balloon-container');
+        const regionOverlay = document.getElementById('region-overlay');
+        const mapImg = document.getElementById('map-img');
+        const menuBtn = document.getElementById('menu-btn');
+
+        function init() {
+            loadBestStreak();
+            updateLabels();
+            
+            toggleModeBtn.addEventListener('click', toggleMode);
+            submitBtn.addEventListener('click', () => checkAnswer(textAnswerInput.value));
+            textAnswerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkAnswer(textAnswerInput.value);
+            });
+            langSelect.addEventListener('change', (e) => {
+                state.lang = e.target.value;
+                updateLabels();
+            });
+        }
+
+        function selectRegion(regionId) {
+            state.currentRegion = regionId;
+            regionOverlay.style.display = 'none';
+            mapImg.src = regions[regionId].image;
+            
+            // Reset scores for new region session
+            state.sessionScore = 0;
+            state.wrongScore = 0;
+            state.currentStreak = 0;
+            updateUI();
+            
+            nextQuestion();
+        }
+
+        function showMenu() {
+            regionOverlay.style.display = 'flex';
+        }
+
+        function triggerCelebration() {
+            const colors = ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#e67e22'];
+            const balloonCount = 15;
+            
+            for (let i = 0; i < balloonCount; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                
+                // Random properties
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const left = Math.random() * 100;
+                const delay = Math.random() * 0.5;
+                const duration = 2 + Math.random() * 2;
+                
+                balloon.style.backgroundColor = color;
+                balloon.style.left = `${left}%`;
+                balloon.style.animationDelay = `${delay}s`;
+                balloon.style.animationDuration = `${duration}s`;
+                
+                balloonContainer.appendChild(balloon);
+                
+                // Clean up after animation
+                balloon.addEventListener('animationend', () => {
+                    balloon.remove();
+                });
+            }
+        }
+
+        function updateLabels() {
+            const t = translations[state.lang];
+            document.getElementById('label-score').textContent = t.score;
+            document.getElementById('label-wrong').textContent = t.wrong;
+            document.getElementById('label-lives').textContent = t.lives;
+            document.getElementById('label-best').textContent = t.best;
+            document.getElementById('label-streak').textContent = t.streak;
+            document.getElementById('label-select-region').textContent = t.selectRegion;
+            document.getElementById('label-west').textContent = t.west;
+            document.getElementById('label-south').textContent = t.south;
+            menuBtn.textContent = t.menu;
+            
+            textAnswerInput.placeholder = t.placeholder;
+            submitBtn.textContent = t.submit;
+            toggleModeBtn.textContent = state.isHardMode ? t.mcMode : t.hardMode;
+
+            // Refresh current question text
+            if (state.currentQuestion) {
+                if (state.currentQuestion.question) {
+                    questionTextEl.textContent = state.currentQuestion.question[state.lang] || state.currentQuestion.question.en;
+                } else {
+                    questionTextEl.textContent = `${t.find}: ${state.currentQuestion.id}`;
+                }
+            }
+        }
+
+        function nextQuestion() {
+            if (!state.currentRegion) return;
+            state.waiting = false;
+            state.lives = 3;
+            
+            const data = regions[state.currentRegion].data;
+            state.currentQuestion = data[Math.floor(Math.random() * data.length)];
+            
+            const t = translations[state.lang];
+            if (state.currentQuestion.question) {
+                questionTextEl.textContent = state.currentQuestion.question[state.lang] || state.currentQuestion.question.en;
+            } else {
+                questionTextEl.textContent = `${t.find}: ${state.currentQuestion.id}`;
+            }
+            
+            feedbackOverlay.className = '';
+            textAnswerInput.value = '';
+            textAnswerInput.classList.remove('incorrect-text');
+            
+            updateUI();
+            
+            if (state.isHardMode) {
+                textAnswerInput.focus();
+            } else {
+                renderOptions();
+            }
+        }
+
+        function renderOptions() {
+            optionsGrid.innerHTML = '';
+            const data = regions[state.currentRegion].data;
+            const correct = state.currentQuestion;
+            let options = [correct];
+            
+            while (options.length < 5) {
+                const random = data[Math.floor(Math.random() * data.length)];
+                if (!options.find(o => o.id === random.id)) {
+                    options.push(random);
+                }
+            }
+            
+            // Shuffle
+            options.sort(() => Math.random() - 0.5);
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.textContent = opt.name;
+                btn.addEventListener('click', () => checkAnswer(opt.name, btn));
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(userAnswer, targetBtn) {
+            if (state.waiting) return;
+            state.waiting = true;
+
+            const input = userAnswer.trim().toLowerCase();
+            const correct = state.currentQuestion.name.toLowerCase();
+            
+            let isCorrect = false;
+            if (state.isHardMode) {
+                isCorrect = getSimilarity(input, correct) >= 0.8;
+            } else {
+                isCorrect = input === correct;
+            }
+            
+            if (isCorrect) {
+                state.sessionScore++;
+                state.currentStreak++;
+                
+                if (state.currentStreak > state.bestStreak) {
+                    state.bestStreak = state.currentStreak;
+                    saveBestStreak();
+                }
+                feedbackOverlay.className = 'flash-correct';
+                if (targetBtn) targetBtn.classList.add('correct');
+                triggerCelebration();
+                
+                updateUI();
+                setTimeout(nextQuestion, 1500);
+            } else {
+                if (state.lives > 0) {
+                    state.lives--;
+                    feedbackOverlay.className = 'flash-incorrect';
+                    if (targetBtn) targetBtn.classList.add('incorrect');
+                    
+                    // Show "Shield Used" message
+                    const t = translations[state.lang];
+                    if (state.isHardMode) {
+                        textAnswerInput.value = t.shield;
+                        textAnswerInput.classList.add('incorrect-text');
+                    } else {
+                        const originalText = questionTextEl.textContent;
+                        questionTextEl.textContent = "🛡️ " + t.shield;
+                        setTimeout(() => { 
+                            if (state.currentQuestion.question) {
+                                questionTextEl.textContent = state.currentQuestion.question[state.lang] || state.currentQuestion.question.en;
+                            } else {
+                                questionTextEl.textContent = `${t.find}: ${state.currentQuestion.id}`;
+                            }
+                        }, 1500);
+                    }
+                    
+                    updateUI();
+                    
+                    // Wait 1.5s then let them try again (same question)
+                    setTimeout(() => {
+                        state.waiting = false;
+                        feedbackOverlay.className = '';
+                        if (targetBtn) targetBtn.classList.remove('incorrect');
+                        if (state.isHardMode) {
+                            textAnswerInput.value = '';
+                            textAnswerInput.classList.remove('incorrect-text');
+                            textAnswerInput.focus();
+                        }
+                    }, 1500);
+
+                } else {
+                    state.wrongScore++;
+                    state.currentStreak = 0;
+                    feedbackOverlay.className = 'flash-incorrect';
+                    if (targetBtn) targetBtn.classList.add('incorrect');
+                    
+                    // Show the correct answer
+                    if (state.isHardMode) {
+                        textAnswerInput.value = `${translations[state.lang].incorrect}: ${state.currentQuestion.name}`;
+                        textAnswerInput.classList.add('incorrect-text');
+                    } else {
+                        Array.from(optionsGrid.children).forEach(btn => {
+                            if (btn.textContent === state.currentQuestion.name) {
+                                btn.classList.add('correct');
+                            }
+                        });
+                    }
+                    
+                    updateUI();
+                    setTimeout(nextQuestion, 1500);
+                }
+            }
+        }
+
+        function updateUI() {
+            sessionScoreEl.textContent = state.sessionScore;
+            wrongScoreEl.textContent = state.wrongScore;
+            livesDisplayEl.textContent = "❤️".repeat(state.lives) + "🖤".repeat(3 - state.lives);
+            bestStreakEl.textContent = state.bestStreak;
+            currentStreakEl.textContent = state.currentStreak;
+        }
+
+        function toggleMode() {
+            state.isHardMode = !state.isHardMode;
+            updateLabels();
+            if (state.isHardMode) {
+                optionsGrid.style.display = 'none';
+                hardModeInput.style.display = 'flex';
+                textAnswerInput.focus();
+            } else {
+                optionsGrid.style.display = 'grid';
+                hardModeInput.style.display = 'none';
+                renderOptions();
+            }
+        }
+
+        function getSimilarity(s1, s2) {
+            if (s1 === s2) return 1.0;
+            if (s1.length === 0 || s2.length === 0) return 0.0;
+            
+            const distance = levenshtein(s1, s2);
+            return 1 - (distance / Math.max(s1.length, s2.length));
+        }
+
+        function levenshtein(s1, s2) {
+            const costs = [];
+            for (let i = 0; i <= s1.length; i++) {
+                let lastValue = i;
+                for (let j = 0; j <= s2.length; j++) {
+                    if (i === 0) {
+                        costs[j] = j;
+                    } else if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        }
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+                if (i > 0) costs[s2.length] = lastValue;
+            }
+            return costs[s2.length];
+        }
+
+        function saveBestStreak() {
+            localStorage.setItem('topoBestStreak', state.bestStreak);
+        }
+
+        function loadBestStreak() {
+            const saved = localStorage.getItem('topoBestStreak');
+            if (saved) state.bestStreak = parseInt(saved);
+            updateUI();
+        }
+
+        init();
+    </script>
+</body>
+</html>
