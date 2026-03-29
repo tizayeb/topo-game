@@ -399,11 +399,11 @@
         <h2 id="label-select-region">Select Your Region</h2>
         <div class="region-grid">
             <div class="region-card" onclick="selectRegion('west')">
-                <div class="map-preview" style="background-image: url('IMG_9648.JPG');"></div>
+                <div class="map-preview" style="background-image: url('map-west.JPG');"></div>
                 <h3 id="label-west">West-Nederland</h3>
             </div>
             <div class="region-card" onclick="selectRegion('south')">
-                <div class="map-preview" style="background-image: url('Zuid/map-south.jpg');"></div>
+                <div class="map-preview" style="background-image: url('map-south.jpg');"></div>
                 <h3 id="label-south">Zuid-Nederland</h3>
             </div>
         </div>
@@ -423,7 +423,7 @@
 
     <div id="game-wrapper">
         <div id="map-container">
-            <img id="map-img" src="IMG_9648.JPG" alt="Topological Map">
+            <img id="map-img" src="map-west.JPG" alt="Topological Map">
         </div>
 
 
@@ -516,7 +516,7 @@
         const regions = {
             west: {
                 name: "West-Nederland",
-                image: "IMG_9648.JPG",
+                image: "map-west.JPG",
                 data: [
                     { id: "A", name: "Noord-Holland" },
                     { id: "B", name: "Zuid-Holland" },
@@ -594,7 +594,7 @@
             },
             south: {
                 name: "Zuid-Nederland",
-                image: "Zuid/map-south.jpg",
+                image: "map-south.jpg",
                 data: [
                     { id: "A", name: "Zeeland" },
                     { id: "B", name: "Noord-Brabant" },
