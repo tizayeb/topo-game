@@ -1,401 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topo Game - Noord-Holland, Zuid-Holland & Utrecht</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>TopoTrainer.nl - Professional Map Learning</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#00210c",
+              "inverse-primary": "#92ccff",
+              "surface-container": "#e3efff",
+              "surface-variant": "#d1e4fb",
+              "outline": "#707881",
+              "on-primary": "#ffffff",
+              "background": "#f7f9ff",
+              "primary-fixed-dim": "#92ccff",
+              "on-tertiary": "#ffffff",
+              "error-container": "#ffdad6",
+              "secondary": "#4e6073",
+              "surface-bright": "#f7f9ff",
+              "on-error": "#ffffff",
+              "on-surface": "#091d2e",
+              "surface-container-lowest": "#ffffff",
+              "surface-dim": "#c9dcf3",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#7efba4",
+              "on-background": "#091d2e",
+              "on-surface-variant": "#3f4850",
+              "error": "#ba1a1a",
+              "on-secondary-fixed-variant": "#36485b",
+              "secondary-fixed": "#d1e4fb",
+              "primary-container": "#3498db",
+              "surface-container-high": "#d9eaff",
+              "inverse-on-surface": "#e8f2ff",
+              "on-tertiary-container": "#003115",
+              "secondary-fixed-dim": "#b5c8df",
+              "tertiary-container": "#19a659",
+              "tertiary-fixed-dim": "#61de8a",
+              "surface": "#f7f9ff",
+              "on-secondary-container": "#526478",
+              "secondary-container": "#cfe2f9",
+              "on-primary-container": "#002d47",
+              "outline-variant": "#bfc7d2",
+              "inverse-surface": "#203243",
+              "on-primary-fixed-variant": "#004b73",
+              "primary": "#006397",
+              "surface-tint": "#006397",
+              "surface-container-highest": "#d1e4fb",
+              "on-secondary-fixed": "#091d2e",
+              "tertiary": "#006d37",
+              "primary-fixed": "#cce5ff",
+              "on-secondary": "#ffffff",
+              "surface-container-low": "#edf4ff",
+              "on-tertiary-fixed-variant": "#005228",
+              "on-primary-fixed": "#001d31"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --success: #27ae60;
-            --error: #e74c3c;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #333333;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
         }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        .hero-gradient {
+            background: linear-gradient(135deg, #006397 0%, #3498db 100%);
         }
-
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 100;
-            flex-shrink: 0;
+        .success-flash {
+            box-shadow: inset 0 0 0 12px #19a659 !important;
         }
-
-        header h1 {
-            font-size: 1.2rem;
-            font-weight: 800;
-            letter-spacing: 1px;
+        .error-flash {
+            box-shadow: inset 0 0 0 12px #ba1a1a !important;
         }
-
-        @media (min-width: 600px) {
-            header h1 {
-                font-size: 1.4rem;
-            }
-            header {
-                padding: 10px 20px;
-            }
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        #menu-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: none;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        #menu-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        #lang-select {
-            padding: 5px 10px;
-            border-radius: 4px;
-            border: none;
-            background: white;
-            color: var(--primary);
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* Region Selection Overlay */
-        #region-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--primary);
-            color: white;
-            z-index: 3000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        #region-overlay h2 {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .region-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        @media (min-width: 600px) {
-            .region-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .region-card {
-            background: white;
-            color: var(--primary);
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .region-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .region-card h3 {
-            font-size: 1.5rem;
-        }
-
-        .region-card .map-preview {
-            width: 100%;
-            height: 150px;
-            background-color: #eee;
-            border-radius: 8px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        #game-wrapper {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-        }
-
-        @media (min-width: 800px) {
-            #game-wrapper {
-                flex-direction: row-reverse;
-                overflow: hidden;
-                height: calc(100vh - 50px);
-            }
-        }
-
-        #map-container {
-            flex: 0 0 40vh;
-            background-color: #ddd;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-            border-bottom: 2px solid #ccc;
-        }
-
-        @media (min-width: 800px) {
-            #map-container {
-                flex: 0 0 50%;
-                border-bottom: none;
-                border-left: 2px solid #ccc;
-                height: 100%;
-            }
-        }
-
-        #map-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        #game-container {
-            flex: 1;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        @media (min-width: 800px) {
-            #game-container {
-                justify-content: center;
-                overflow-y: auto;
-                padding: 20px;
-            }
-        }
-
-        .stats {
-            display: flex;
-            gap: 10px;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        @media (min-width: 600px) {
-            .stats {
-                gap: 20px;
-                font-size: 1.1rem;
-            }
-        }
-
-        .stats div span {
-            color: var(--accent);
-        }
-
-        #lives-display {
-            color: #e74c3c !important;
-            letter-spacing: 2px;
-        }
-
-        #question-display {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            text-align: center;
-            line-height: 1.4;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        @media (min-width: 600px) {
-            #question-display {
-                font-size: 1.4rem;
-                margin-bottom: 25px;
-                line-height: 1.6;
-            }
-        }
-
-        #question-display span {
-            font-weight: 600;
-            color: var(--primary);
-            padding: 10px 15px;
-            background: #e3f2fd;
-            border-radius: 8px;
-            display: inline-block;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #bbdefb;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        @media (min-width: 600px) {
-            #question-display span {
-                padding: 12px 20px;
-                width: auto;
-            }
-        }
-
-        .controls {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-
-        @media (min-width: 600px) {
-            .options-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        button {
-            padding: 12px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-            border: 2px solid transparent;
-        }
-
-        @media (min-width: 600px) {
-            button {
-                padding: 15px;
-                font-size: 1.1rem;
-            }
-        }
-
-        button:hover:not(:disabled) {
-            background-color: #f0f0f0;
-            transform: translateY(-2px);
-        }
-
-        button:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
-        button.correct {
-            background-color: var(--success) !important;
-            color: white;
-            border-color: #1e8449;
-        }
-
-        button.incorrect {
-            background-color: var(--error) !important;
-            color: white;
-            border-color: #c0392b;
-        }
-
-        #hard-mode-input {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            padding: 15px;
-            font-size: 1.1rem;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            outline: none;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--accent);
-        }
-
-        input[type="text"].incorrect-text {
-            border-color: var(--error);
-            color: var(--error);
-            font-weight: bold;
-        }
-
-        #toggle-mode {
-            background: none;
-            box-shadow: none;
-            color: var(--accent);
-            text-decoration: underline;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            padding: 5px;
-        }
-
-        #feedback-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .flash-correct {
-            background-color: rgba(39, 174, 96, 0.2);
-            opacity: 1 !important;
-        }
-
-        .flash-incorrect {
-            background-color: rgba(231, 76, 60, 0.2);
-            opacity: 1 !important;
-        }
-
-        /* Balloon Celebration Styles */
         #balloon-container {
             position: fixed;
             top: 0;
@@ -406,7 +98,6 @@
             overflow: hidden;
             z-index: 2000;
         }
-
         .balloon {
             position: absolute;
             bottom: -150px;
@@ -415,7 +106,6 @@
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
             animation: floatUp 3s ease-in forwards;
         }
-
         .balloon::after {
             content: '';
             position: absolute;
@@ -426,86 +116,216 @@
             background: rgba(0,0,0,0.2);
             transform: translateX(-50%);
         }
-
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-50vh) translateX(20px);
-            }
-            100% {
-                transform: translateY(-120vh) translateX(-20px);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            50% { transform: translateY(-50vh) translateX(20px); }
+            100% { transform: translateY(-120vh) translateX(-20px); opacity: 0; }
+        }
+        #feedback-overlay {
+            transition: opacity 0.3s;
         }
     </style>
 </head>
-<body>
+<body class="bg-surface font-body text-on-surface min-h-screen flex flex-col selection:bg-primary-container/30">
 
-    <div id="feedback-overlay"></div>
+    <!-- Feedback Overlays -->
+    <div id="feedback-overlay" class="fixed inset-0 pointer-events-none z-[60] opacity-0"></div>
     <div id="balloon-container"></div>
 
-    <div id="region-overlay">
-        <h2 id="label-select-region">Select Your Region</h2>
-        <div class="region-grid">
-            <div class="region-card" onclick="selectRegion('west')">
-                <div class="map-preview" style="background-image: url('map-west.JPG');"></div>
-                <h3 id="label-west">West-Nederland</h3>
+    <!-- Region Selection Overlay -->
+    <div id="region-overlay" class="fixed inset-0 z-[3000] bg-background flex flex-col overflow-y-auto">
+        <main class="min-h-screen pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+            <div class="mb-12 md:mb-20">
+                <p id="label-region-metadata" class="text-[0.75rem] font-bold tracking-[0.05em] text-primary uppercase mb-3 text-center md:text-left">REGION SELECTION</p>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight text-on-surface mb-6 md:ml-[-2px] text-center md:text-left leading-tight">
+                    <span id="label-select-region">Choose your</span> <span class="text-primary-container">territory.</span>
+                </h1>
+                <p id="label-region-desc" class="text-lg text-on-surface-variant max-w-xl leading-relaxed mx-auto md:mx-0 text-center md:text-left">
+                    Select a province or region to begin your cartographic journey. Master the geography of the Netherlands through precision practice.
+                </p>
             </div>
-            <div class="region-card" onclick="selectRegion('south')">
-                <div class="map-preview" style="background-image: url('map-south.jpg');"></div>
-                <h3 id="label-south">Zuid-Nederland</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- West-Nederland -->
+                <div onclick="selectRegion('west')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer">
+                    <div class="aspect-[16/10] overflow-hidden relative">
+                        <img src="map-west.JPG" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+                    </div>
+                    <div class="p-8 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 id="label-west" class="text-3xl font-extrabold tracking-tight text-on-surface">West-Nederland</h2>
+                                <span class="text-primary-container material-symbols-outlined text-4xl">explore</span>
+                            </div>
+                            <p class="text-on-surface-variant mb-8 line-clamp-2">Master the Randstad, North Holland, and South Holland. Includes coastal navigation.</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold">NH</div>
+                                <div class="w-8 h-8 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">ZH</div>
+                                <div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">UT</div>
+                            </div>
+                            <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+                                <span id="label-start-1" class="text-sm font-bold uppercase tracking-widest text-primary">Start Training</span>
+                                <span class="material-symbols-outlined text-primary">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Zuid-Nederland -->
+                <div onclick="selectRegion('south')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer">
+                    <div class="aspect-[16/10] overflow-hidden relative">
+                        <img src="map-south.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+                    </div>
+                    <div class="p-8 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 id="label-south" class="text-3xl font-extrabold tracking-tight text-on-surface">Zuid-Nederland</h2>
+                                <span class="text-primary-container material-symbols-outlined text-4xl">terrain</span>
+                            </div>
+                            <p class="text-on-surface-variant mb-8 line-clamp-2">Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold">NB</div>
+                                <div class="w-8 h-8 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">LI</div>
+                                <div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">ZE</div>
+                            </div>
+                            <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+                                <span id="label-start-2" class="text-sm font-bold uppercase tracking-widest text-primary">Start Training</span>
+                                <span class="material-symbols-outlined text-primary">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <header>
-        <h1>TopoTrainer.nl</h1>
-        <div class="header-right">
-            <div id="menu-btn" onclick="showMenu()">Menu</div>
-            <select id="lang-select">
+    <!-- Top Navigation Bar -->
+    <header class="fixed top-0 w-full z-50 glass-nav shadow-[0px_20px_40px_rgba(9,29,46,0.06)] flex justify-between items-center px-6 py-3">
+        <div class="flex items-center gap-4">
+            <button onclick="showMenu()" class="p-2 hover:bg-slate-100/50 transition-colors active:scale-95 duration-200 rounded-full">
+                <span class="material-symbols-outlined text-on-surface-variant">menu</span>
+            </button>
+            <span class="text-xl font-black tracking-tighter text-blue-900">TopoTrainer.nl</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <select id="lang-select" class="p-2 pr-8 bg-white/50 border-none rounded-lg text-sm font-bold text-primary focus:ring-primary focus:border-primary">
                 <option value="en">English</option>
                 <option value="nl">Nederlands</option>
                 <option value="tr">Türkçe</option>
             </select>
         </div>
+        <div class="absolute bottom-0 left-0 bg-slate-100 h-px w-full"></div>
     </header>
 
-    <div id="game-wrapper">
-        <div id="map-container">
-            <img id="map-img" src="map-west.JPG" alt="Topological Map">
-        </div>
-
-
-        <div id="game-container">
-            <div class="stats">
-                <div><span id="label-score">Score</span>: <span id="session-score">0</span></div>
-                <div><span id="label-wrong">Wrong</span>: <span id="wrong-score">0</span></div>
-                <div><span id="label-lives">Lives</span>: <span id="lives-display">❤️❤️❤️</span></div>
-                <div><span id="label-best">Best Streak</span>: <span id="best-streak">0</span></div>
-                <div style="font-size: 0.8rem; color: #666;"><span id="label-streak">Streak</span>: <span id="current-streak">0</span></div>
-            </div>
-
-            <div id="question-display">
-                <span id="question-text">?</span>
-            </div>
-
-            <div class="controls">
-                <div id="multiple-choice" class="options-grid">
-                    <!-- Options will be injected here -->
+    <!-- Shield Pop-up Modal -->
+    <div id="shield-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-on-surface/20 backdrop-blur-sm hidden">
+        <div class="bg-on-surface text-white p-8 rounded-[40px] shadow-2xl relative overflow-hidden ring-4 ring-primary-container/30 max-w-md w-full text-center">
+            <div class="relative z-10 flex flex-col items-center">
+                <div class="w-20 h-20 bg-primary-container rounded-full flex items-center justify-center mb-6 shadow-lg shadow-primary-container/20">
+                    <span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">shield</span>
                 </div>
-
-                <div id="hard-mode-input">
-                    <input type="text" id="text-answer" placeholder="Type location name..." autocomplete="off">
-                    <button id="submit-answer" style="background-color: var(--accent); color: white;">Submit</button>
+                <h3 id="modal-shield-title" class="text-2xl font-bold mb-2">Shield Used!</h3>
+                <p id="modal-shield-desc" class="text-surface-variant mb-6 leading-relaxed">Your streak was protected.</p>
+                <div id="modal-lives-container" class="flex gap-3 justify-center">
+                    <!-- Lives will be injected here -->
                 </div>
-
-                <button id="toggle-mode">Switch to Hard Mode</button>
             </div>
+            <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-primary-container/10 rounded-full blur-2xl"></div>
         </div>
     </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-20 pb-32 px-4 md:px-8 max-w-[1600px] mx-auto w-full flex flex-col gap-8">
+        
+        <!-- Question Section -->
+        <section class="mb-4 md:ml-4">
+            <div class="inline-block px-3 py-1 mb-4 bg-primary-fixed text-on-primary-fixed rounded-lg font-bold text-[10px] tracking-widest uppercase">
+                TRAINING MODULE
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black text-on-surface tracking-tighter mb-2" id="question-text">
+                ?
+            </h1>
+            <p id="label-instruction" class="text-on-surface-variant font-medium">Select the correct location from the options below.</p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Map Container -->
+            <div class="lg:col-span-8 relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-container rounded-[40px] rotate-1 group-hover:rotate-0 transition-transform duration-500 opacity-5"></div>
+                <div class="relative bg-surface-container-lowest p-2 rounded-[40px] shadow-[0px_20px_40px_rgba(9,29,46,0.06)] overflow-hidden">
+                    <div class="aspect-video lg:h-[600px] w-full relative bg-surface-container-low rounded-[32px] overflow-hidden flex items-center justify-center">
+                        <img id="map-img" class="max-w-full max-h-full object-contain" src="map-west.JPG">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interaction Column -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <div class="bg-surface-container-low p-8 rounded-[40px]">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="h-10 w-1 bg-primary rounded-full"></div>
+                        <h3 id="label-input-title" class="text-xl font-bold tracking-tight">Your Answer</h3>
+                    </div>
+
+                    <!-- Multiple Choice -->
+                    <div id="multiple-choice" class="grid grid-cols-1 gap-4">
+                        <!-- Options injected here -->
+                    </div>
+
+                    <!-- Hard Mode Input -->
+                    <div id="hard-mode-input" class="hidden flex flex-col gap-4">
+                        <input type="text" id="text-answer" class="w-full p-5 bg-surface-container-high border-none rounded-2xl text-lg font-bold focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" autocomplete="off">
+                        <button id="submit-answer" class="w-full py-5 bg-gradient-to-r from-primary to-primary-container text-white font-black text-lg tracking-widest uppercase rounded-2xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                            Submit
+                        </button>
+                    </div>
+
+                    <!-- Toggle Mode -->
+                    <button id="toggle-mode" class="mt-8 text-primary font-bold text-sm uppercase tracking-widest hover:underline w-full text-center cursor-pointer">
+                        Switch to Hard Mode
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Scoreboard -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-3 pb-6 px-4 bg-white/90 backdrop-blur-md border-t border-slate-100 rounded-t-[40px] shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+        <!-- Score -->
+        <div class="flex flex-col items-center text-blue-600 scale-110">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">stars</span>
+            <span id="label-score" class="text-[10px] font-bold uppercase tracking-widest mt-1">Score</span>
+            <span id="session-score" class="font-black text-sm text-on-surface">0</span>
+        </div>
+        <!-- Wrong -->
+        <div class="flex flex-col items-center text-slate-400">
+            <span class="material-symbols-outlined text-2xl">cancel</span>
+            <span id="label-wrong" class="text-[10px] font-bold uppercase tracking-widest mt-1">Wrong</span>
+            <span id="wrong-score" class="font-black text-sm text-on-surface">0</span>
+        </div>
+        <!-- Lives -->
+        <div class="flex flex-col items-center text-slate-400">
+            <span class="material-symbols-outlined text-2xl text-red-500" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            <span id="label-lives" class="text-[10px] font-bold uppercase tracking-widest mt-1">Lives</span>
+            <span id="lives-display" class="font-black text-sm text-red-500">❤️❤️❤️</span>
+        </div>
+        <!-- Streak -->
+        <div class="flex flex-col items-center text-slate-400">
+            <span class="material-symbols-outlined text-2xl text-orange-500" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+            <span id="label-streak" class="text-[10px] font-bold uppercase tracking-widest mt-1">Streak</span>
+            <span id="current-streak" class="font-black text-sm text-on-surface">0</span>
+        </div>
+        <!-- Best Streak -->
+        <div class="hidden md:flex flex-col items-center text-slate-400">
+            <span class="material-symbols-outlined text-2xl text-amber-500" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+            <span id="label-best" class="text-[10px] font-bold uppercase tracking-widest mt-1">Best</span>
+            <span id="best-streak" class="font-black text-sm text-on-surface">0</span>
+        </div>
+    </nav>
 
     <script>
         const translations = {
@@ -525,7 +345,10 @@
                 selectRegion: "Select Your Region",
                 west: "West Netherlands",
                 south: "South Netherlands",
-                menu: "Menu"
+                menu: "Menu",
+                startTraining: "Start Training",
+                instruction: "Select the correct location from the options below.",
+                inputTitle: "Your Answer"
             },
             nl: {
                 find: "Zoek de locatie voor",
@@ -543,7 +366,10 @@
                 selectRegion: "Selecteer Je Regio",
                 west: "West-Nederland",
                 south: "Zuid-Nederland",
-                menu: "Menu"
+                menu: "Menu",
+                startTraining: "Start Training",
+                instruction: "Selecteer de juiste locatie uit de onderstaande opties.",
+                inputTitle: "Jouw Antwoord"
             },
             tr: {
                 find: "Şu konumun yerini bul",
@@ -561,7 +387,10 @@
                 selectRegion: "Bölgeni Seç",
                 west: "Batı Hollanda",
                 south: "Güney Hollanda",
-                menu: "Menü"
+                menu: "Menü",
+                startTraining: "Eğitime Başla",
+                instruction: "Aşağıdaki seçeneklerden doğru konumu seçin.",
+                inputTitle: "Senin Cevabın"
             }
         };
 
@@ -611,7 +440,6 @@
                     { id: "MV", name: "Maasvlakte" },
                     { id: "WF", name: "West-Friesland" },
                     { id: "WL", name: "Westland" },
-                    // Spatial Questions
                     { question: { en: "Which city is 20km west of Amsterdam (1)?", nl: "Welke stad ligt 20 km ten westen van Amsterdam (1)?", tr: "Amsterdam'ın (1) 20 km batısındaki şehir hangisidir?" }, name: "Haarlem" },
                     { question: { en: "What is the name of the city 10km south of Amsterdam (1)?", nl: "Wat is de naam van de stad 10 km ten zuiden van Amsterdam (1)?", tr: "Amsterdam'ın (1) 10 km güneyindeki şehrin adı nedir?" }, name: "Amstelveen" },
                     { question: { en: "Which city is 25km east of Utrecht (3)?", nl: "Welke stad ligt 25 km ten oosten van Utrecht (3)?", tr: "Utrecht'in (3) 25 km doğusundaki şehir hangisidir?" }, name: "Amersfoort" },
@@ -677,7 +505,6 @@
                     { id: "BE", name: "België" },
                     { id: "DU", name: "Duitsland" },
                     { id: "EF", name: "Efteling" },
-                    // Spatial Questions
                     { question: { en: "What is the name of the place 5km north of Vlissingen (4)?", nl: "Wat is de naam van de plaats 5 km ten noorden van Vlissingen (4)?", tr: "Vlissingen'in (4) 5 km kuzeyindeki yerin adı nedir?" }, name: "Middelburg" },
                     { question: { en: "Which city is 20km east of Middelburg (1)?", nl: "Welke stad ligt 20 km ten oosten van Middelburg (1)?", tr: "Middelburg'un (1) 20 km doğusundaki şehir hangisidir?" }, name: "Bergen op Zoom" },
                     { question: { en: "What city is 10km south of Middelburg (1) across the water?", nl: "Welke stad ligt 10 km ten zuiden van Middelburg (1) over het water?", tr: "Middelburg'un (1) suyun karşısındaki 10 km güneyindeki şehir hangisidir?" }, name: "Terneuzen" },
@@ -695,7 +522,7 @@
                     { question: { en: "What mountain is 10km south of Heerlen (15)?", nl: "Welke berg ligt 10 km ten zuiden van Heerlen (15)?", tr: "Heerlen'ın (15) 10 km güneyindeki dağ hangisidir?" }, name: "Vaalserberg" },
                     { question: { en: "What area is in the south of Zeeland (A)?", nl: "Welk gebied ligt in het zuiden van Zeeland (A)?", tr: "Zeeland'ın (A) güneyindeki bölge hangisidir?" }, name: "Zeeuws-Vlaanderen" },
                     { question: { en: "What water is north of Zeeuws-Vlaanderen (D)?", nl: "Welk water ligt ten noorden van Zeeuws-Vlaanderen (D)?", tr: "Zeeuws-Vlaanderen'ın (D) kuzeyindeki su kütlesi nedir?" }, name: "Westerschelde" },
-                    { question: { en: "What water is between Zeeland (A) and Noord-Brabant (B)?", nl: "Welk water ligt tussen Zeeland (A) en Noord-Brabant (B)?", tr: "Zeeland (A) ile Noord-Brabant (B) arasındaki su kütlesi nedir?" }, name: "Oosterschelde" },
+                    { question: { en: "What water is between Zeeland (A) and Noord-Brabant (B)?", nl: "Welk water ligt tussen Zeeland (A) and Noord-Brabant (B)?", tr: "Zeeland (A) ile Noord-Brabant (B) arasındaki su kütlesi nedir?" }, name: "Oosterschelde" },
                     { question: { en: "What river flows through Limburg (C)?", nl: "Welke rivier stroomt door Limburg (C)?", tr: "Limburg'dan (C) geçen nehir hangisidir?" }, name: "Maas" },
                     { question: { en: "What area is 10km north of Breda (8)?", nl: "Welk gebied ligt 10 km ten noorden van Breda (8)?", tr: "Breda'nın (8) 10 km kuzeyindeki bölge hangisidir?" }, name: "Biesbos" },
                     { question: { en: "What country is south of the Netherlands (BE)?", nl: "Welk land ligt ten zuiden van Nederland (BE)?", tr: "Hollanda'nın (BE) güneyindeki ülke hangisidir?" }, name: "België" },
@@ -742,7 +569,8 @@
         const balloonContainer = document.getElementById('balloon-container');
         const regionOverlay = document.getElementById('region-overlay');
         const mapImg = document.getElementById('map-img');
-        const menuBtn = document.getElementById('menu-btn');
+        const shieldModal = document.getElementById('shield-modal');
+        const modalLivesContainer = document.getElementById('modal-lives-container');
 
         function init() {
             loadBestStreak();
@@ -764,7 +592,6 @@
             regionOverlay.style.display = 'none';
             mapImg.src = regions[regionId].image;
             
-            // Reset scores for new region session
             state.sessionScore = 0;
             state.wrongScore = 0;
             state.currentStreak = 0;
@@ -780,28 +607,19 @@
         function triggerCelebration() {
             const colors = ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#e67e22'];
             const balloonCount = 15;
-            
             for (let i = 0; i < balloonCount; i++) {
                 const balloon = document.createElement('div');
                 balloon.className = 'balloon';
-                
-                // Random properties
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 const left = Math.random() * 100;
                 const delay = Math.random() * 0.5;
                 const duration = 2 + Math.random() * 2;
-                
                 balloon.style.backgroundColor = color;
                 balloon.style.left = `${left}%`;
                 balloon.style.animationDelay = `${delay}s`;
                 balloon.style.animationDuration = `${duration}s`;
-                
                 balloonContainer.appendChild(balloon);
-                
-                // Clean up after animation
-                balloon.addEventListener('animationend', () => {
-                    balloon.remove();
-                });
+                balloon.addEventListener('animationend', () => { balloon.remove(); });
             }
         }
 
@@ -815,13 +633,18 @@
             document.getElementById('label-select-region').textContent = t.selectRegion;
             document.getElementById('label-west').textContent = t.west;
             document.getElementById('label-south').textContent = t.south;
-            menuBtn.textContent = t.menu;
+            document.getElementById('label-region-metadata').textContent = t.selectRegion.toUpperCase();
+            document.getElementById('label-region-desc').textContent = t.instruction;
+            document.getElementById('label-instruction').textContent = t.instruction;
+            document.getElementById('label-input-title').textContent = t.inputTitle;
+            document.getElementById('modal-shield-title').textContent = t.shield;
+            document.getElementById('label-start-1').textContent = t.startTraining;
+            document.getElementById('label-start-2').textContent = t.startTraining;
             
             textAnswerInput.placeholder = t.placeholder;
             submitBtn.textContent = t.submit;
             toggleModeBtn.textContent = state.isHardMode ? t.mcMode : t.hardMode;
 
-            // Refresh current question text
             if (state.currentQuestion) {
                 if (state.currentQuestion.question) {
                     questionTextEl.textContent = state.currentQuestion.question[state.lang] || state.currentQuestion.question.en;
@@ -846,9 +669,9 @@
                 questionTextEl.textContent = `${t.find}: ${state.currentQuestion.id}`;
             }
             
-            feedbackOverlay.className = '';
+            feedbackOverlay.className = 'fixed inset-0 pointer-events-none z-[60] opacity-0';
             textAnswerInput.value = '';
-            textAnswerInput.classList.remove('incorrect-text');
+            textAnswerInput.classList.remove('text-error', 'font-black');
             
             updateUI();
             
@@ -864,20 +687,17 @@
             const data = regions[state.currentRegion].data;
             const correct = state.currentQuestion;
             let options = [correct];
-            
             while (options.length < 5) {
                 const random = data[Math.floor(Math.random() * data.length)];
-                if (!options.find(o => o.id === random.id)) {
+                if (!options.find(o => o.id === random.id && o.name === random.name)) {
                     options.push(random);
                 }
             }
-            
-            // Shuffle
             options.sort(() => Math.random() - 0.5);
-            
             options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.textContent = opt.name;
+                btn.className = "flex items-center justify-between p-4 bg-surface-container-lowest border-2 border-transparent hover:border-primary-container hover:bg-blue-50 transition-all duration-300 group rounded-2xl w-full";
+                btn.innerHTML = `<span class="font-bold text-on-surface text-lg">${opt.name}</span><span class="w-6 h-6 rounded-full border-2 border-outline-variant group-hover:border-primary transition-colors"></span>`;
                 btn.addEventListener('click', () => checkAnswer(opt.name, btn));
                 optionsGrid.appendChild(btn);
             });
@@ -889,6 +709,7 @@
 
             const input = userAnswer.trim().toLowerCase();
             const correct = state.currentQuestion.name.toLowerCase();
+            const t = translations[state.lang];
             
             let isCorrect = false;
             if (state.isHardMode) {
@@ -900,75 +721,83 @@
             if (isCorrect) {
                 state.sessionScore++;
                 state.currentStreak++;
-                
                 if (state.currentStreak > state.bestStreak) {
                     state.bestStreak = state.currentStreak;
                     saveBestStreak();
                 }
-                feedbackOverlay.className = 'flash-correct';
-                if (targetBtn) targetBtn.classList.add('correct');
+                feedbackOverlay.className = 'fixed inset-0 pointer-events-none z-[60] success-flash opacity-20';
+                if (targetBtn) {
+                    targetBtn.classList.add('border-tertiary-container', 'bg-tertiary-fixed/20');
+                    targetBtn.querySelector('span:last-child').className = "w-6 h-6 rounded-full bg-tertiary-container flex items-center justify-center";
+                    targetBtn.querySelector('span:last-child').innerHTML = '<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: \'wght\' 700;">check</span>';
+                }
                 triggerCelebration();
-                
                 updateUI();
                 setTimeout(nextQuestion, 1500);
             } else {
                 if (state.lives > 0) {
                     state.lives--;
-                    feedbackOverlay.className = 'flash-incorrect';
-                    if (targetBtn) targetBtn.classList.add('incorrect');
+                    feedbackOverlay.className = 'fixed inset-0 pointer-events-none z-[60] error-flash opacity-20';
                     
-                    // Show "Shield Used" message
-                    const t = translations[state.lang];
-                    if (state.isHardMode) {
-                        textAnswerInput.value = t.shield;
-                        textAnswerInput.classList.add('incorrect-text');
-                    } else {
-                        const originalText = questionTextEl.textContent;
-                        questionTextEl.textContent = "🛡️ " + t.shield;
-                        setTimeout(() => { 
-                            if (state.currentQuestion.question) {
-                                questionTextEl.textContent = state.currentQuestion.question[state.lang] || state.currentQuestion.question.en;
-                            } else {
-                                questionTextEl.textContent = `${t.find}: ${state.currentQuestion.id}`;
-                            }
-                        }, 1500);
+                    if (targetBtn) {
+                        targetBtn.classList.add('border-error', 'bg-error-container/20');
+                        targetBtn.querySelector('span:last-child').className = "w-6 h-6 rounded-full bg-error flex items-center justify-center";
+                        targetBtn.querySelector('span:last-child').innerHTML = '<span class="material-symbols-outlined text-white text-sm">close</span>';
                     }
+
+                    // Show Shield Modal
+                    shieldModal.classList.remove('hidden');
+                    updateShieldModal();
                     
                     updateUI();
                     
-                    // Wait 1.5s then let them try again (same question)
                     setTimeout(() => {
+                        shieldModal.classList.add('hidden');
                         state.waiting = false;
-                        feedbackOverlay.className = '';
-                        if (targetBtn) targetBtn.classList.remove('incorrect');
+                        feedbackOverlay.className = 'fixed inset-0 pointer-events-none z-[60] opacity-0';
+                        if (targetBtn && !state.isHardMode) {
+                            targetBtn.classList.remove('border-error', 'bg-error-container/20');
+                            targetBtn.querySelector('span:last-child').className = "w-6 h-6 rounded-full border-2 border-outline-variant";
+                            targetBtn.querySelector('span:last-child').innerHTML = '';
+                        }
                         if (state.isHardMode) {
                             textAnswerInput.value = '';
-                            textAnswerInput.classList.remove('incorrect-text');
                             textAnswerInput.focus();
                         }
-                    }, 1500);
+                    }, 2000);
 
                 } else {
                     state.wrongScore++;
                     state.currentStreak = 0;
-                    feedbackOverlay.className = 'flash-incorrect';
-                    if (targetBtn) targetBtn.classList.add('incorrect');
+                    feedbackOverlay.className = 'fixed inset-0 pointer-events-none z-[60] error-flash opacity-40';
                     
-                    // Show the correct answer
                     if (state.isHardMode) {
-                        textAnswerInput.value = `${translations[state.lang].incorrect}: ${state.currentQuestion.name}`;
-                        textAnswerInput.classList.add('incorrect-text');
+                        textAnswerInput.value = `${t.incorrect}: ${state.currentQuestion.name}`;
+                        textAnswerInput.classList.add('text-error', 'font-black');
                     } else {
                         Array.from(optionsGrid.children).forEach(btn => {
-                            if (btn.textContent === state.currentQuestion.name) {
-                                btn.classList.add('correct');
+                            if (btn.textContent.trim() === state.currentQuestion.name) {
+                                btn.classList.add('border-tertiary-container', 'bg-tertiary-fixed/20');
                             }
                         });
                     }
                     
                     updateUI();
-                    setTimeout(nextQuestion, 1500);
+                    setTimeout(nextQuestion, 2000);
                 }
+            }
+        }
+
+        function updateShieldModal() {
+            modalLivesContainer.innerHTML = '';
+            for(let i=0; i<3; i++) {
+                const heart = document.createElement('div');
+                heart.className = `flex flex-col items-center ${i < state.lives ? '' : 'opacity-30'}`;
+                heart.innerHTML = `
+                    <span class="material-symbols-outlined text-tertiary-fixed text-3xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    <span class="text-[10px] font-bold uppercase mt-1">${i < state.lives ? 'Life ' + (i+1) : 'Empty'}</span>
+                `;
+                modalLivesContainer.appendChild(heart);
             }
         }
 
@@ -985,11 +814,11 @@
             updateLabels();
             if (state.isHardMode) {
                 optionsGrid.style.display = 'none';
-                hardModeInput.style.display = 'flex';
+                hardModeInput.classList.remove('hidden');
                 textAnswerInput.focus();
             } else {
                 optionsGrid.style.display = 'grid';
-                hardModeInput.style.display = 'none';
+                hardModeInput.classList.add('hidden');
                 renderOptions();
             }
         }
@@ -997,7 +826,6 @@
         function getSimilarity(s1, s2) {
             if (s1 === s2) return 1.0;
             if (s1.length === 0 || s2.length === 0) return 0.0;
-            
             const distance = levenshtein(s1, s2);
             return 1 - (distance / Math.max(s1.length, s2.length));
         }
@@ -1007,13 +835,10 @@
             for (let i = 0; i <= s1.length; i++) {
                 let lastValue = i;
                 for (let j = 0; j <= s2.length; j++) {
-                    if (i === 0) {
-                        costs[j] = j;
-                    } else if (j > 0) {
+                    if (i === 0) costs[j] = j;
+                    else if (j > 0) {
                         let newValue = costs[j - 1];
-                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
-                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                        }
+                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
                         costs[j - 1] = lastValue;
                         lastValue = newValue;
                     }
@@ -1023,10 +848,7 @@
             return costs[s2.length];
         }
 
-        function saveBestStreak() {
-            localStorage.setItem('topoBestStreak', state.bestStreak);
-        }
-
+        function saveBestStreak() { localStorage.setItem('topoBestStreak', state.bestStreak); }
         function loadBestStreak() {
             const saved = localStorage.getItem('topoBestStreak');
             if (saved) state.bestStreak = parseInt(saved);
