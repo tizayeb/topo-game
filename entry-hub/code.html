@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TopoTrainer.nl - Select Region</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#00210c",
+              "inverse-primary": "#92ccff",
+              "surface-container": "#e3efff",
+              "surface-variant": "#d1e4fb",
+              "outline": "#707881",
+              "on-primary": "#ffffff",
+              "background": "#f7f9ff",
+              "primary-fixed-dim": "#92ccff",
+              "on-tertiary": "#ffffff",
+              "error-container": "#ffdad6",
+              "secondary": "#4e6073",
+              "surface-bright": "#f7f9ff",
+              "on-error": "#ffffff",
+              "on-surface": "#091d2e",
+              "surface-container-lowest": "#ffffff",
+              "surface-dim": "#c9dcf3",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#7efba4",
+              "on-background": "#091d2e",
+              "on-surface-variant": "#3f4850",
+              "error": "#ba1a1a",
+              "on-secondary-fixed-variant": "#36485b",
+              "secondary-fixed": "#d1e4fb",
+              "primary-container": "#3498db",
+              "surface-container-high": "#d9eaff",
+              "inverse-on-surface": "#e8f2ff",
+              "on-tertiary-container": "#003115",
+              "secondary-fixed-dim": "#b5c8df",
+              "tertiary-container": "#19a659",
+              "tertiary-fixed-dim": "#61de8a",
+              "surface": "#f7f9ff",
+              "on-secondary-container": "#526478",
+              "secondary-container": "#cfe2f9",
+              "on-primary-container": "#002d47",
+              "outline-variant": "#bfc7d2",
+              "inverse-surface": "#203243",
+              "on-primary-fixed-variant": "#004b73",
+              "primary": "#006397",
+              "surface-tint": "#006397",
+              "surface-container-highest": "#d1e4fb",
+              "on-secondary-fixed": "#091d2e",
+              "tertiary": "#006d37",
+              "primary-fixed": "#cce5ff",
+              "on-secondary": "#ffffff",
+              "surface-container-low": "#edf4ff",
+              "on-tertiary-fixed-variant": "#005228",
+              "on-primary-fixed": "#001d31"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #006397 0%, #3498db 100%);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background selection:bg-primary-container selection:text-white">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 glass-nav shadow-[0px_20px_40px_rgba(9,29,46,0.06)]">
+<div class="flex justify-between items-center px-6 py-3 w-full">
+<div class="flex items-center gap-4">
+<button class="text-blue-700 hover:bg-slate-100/50 p-2 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="text-xl font-black tracking-tighter text-blue-900 font-headline">TopoTrainer.nl</span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-blue-700 font-bold font-sans antialiased tracking-tight" href="#">Dashboard</a>
+<a class="text-slate-500 hover:bg-slate-100/50 px-3 py-1 rounded-lg transition-colors" href="#">Practice</a>
+<a class="text-slate-500 hover:bg-slate-100/50 px-3 py-1 rounded-lg transition-colors" href="#">Highscores</a>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-blue-700 hover:bg-slate-100/50 p-2 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">language</span>
+</button>
+</div>
+</div>
+<div class="bg-slate-100 h-px w-full"></div>
+</header>
+<main class="min-h-screen pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-12 md:mb-20">
+<p class="text-[0.75rem] font-bold tracking-[0.05em] text-primary uppercase mb-3">Region Selection</p>
+<h1 class="text-4xl md:text-6xl font-black tracking-tight text-on-surface mb-6 md:ml-[-2px]">
+                Choose your <span class="text-primary-container">territory.</span>
+</h1>
+<p class="text-lg text-on-surface-variant max-w-xl leading-relaxed">
+                Select a province or region to begin your cartographic journey. Master the geography of the Netherlands through precision practice.
+            </p>
+</div>
+<!-- Bento Grid / Card Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+<!-- West-Nederland Card -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer">
+<div class="aspect-[16/10] overflow-hidden relative">
+<img alt="West-Nederland Map" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Modern cartographic map style of Western Netherlands with clean vector lines, subtle blue gradients, and highlighted coastal areas." data-location="Amsterdam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8HjV-B6GPcaoIlODrzMVWH0yYXe9LUwlHKbyfIvuF-DjxZhNUpa65xtyV9f0cDLBFK89oel-DL6ilzY0uh4Wfv8egZMZveOzRgG1PAFXi0h9GjXuDsY7gnH8Tglw0SG2LXr8_OkFjOxAyjLRuNEE2id8inMkXhqXlKBGFbYOqnxkjwBLbvvJjIcXpuyFIScw4sqHPT-S6AOZeuvb1hraV7o09sQ_o-PmEy1sFlCNYMj9U949VXrOQNy7oUGutdH4agbP9n2Flz8s"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+</div>
+<div class="p-8 flex flex-col justify-between h-full">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">West-Nederland</h2>
+<span class="text-primary-container material-symbols-outlined text-4xl">explore</span>
+</div>
+<p class="text-on-surface-variant mb-8 line-clamp-2">
+                            Master the Randstad, North Holland, and South Holland. Includes coastal navigation and urban density charts.
+                        </p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold">NH</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">ZH</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">UT</div>
+</div>
+<div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+<span class="text-sm font-bold uppercase tracking-widest text-primary">Start Training</span>
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Zuid-Nederland Card -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer">
+<div class="aspect-[16/10] overflow-hidden relative">
+<img alt="Zuid-Nederland Map" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Stylized geographical map of Southern Netherlands provinces showing Brabant and Limburg with topographic highlights and soft blue hues." data-location="Eindhoven" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPTzBAduMLreTH6VdCh7AftLMr5fNmYmOrtqFIuC8PK4EufBjfjWD8Y70J15985L3BzpnNJwTyvtrg2HbZLJU4Ge2PL_ky_WDBgfnlqmMGvirhEsdi4xWC3_-8Ar8kmEEvAwcjyiNrQPWvxHjFmsG799z8Sco6Puou9E8QgDYvWUSFSlGLiwap76d80KdXPtuO-Z4OgW-iXZ4RzLu2jZ_BB7uql2L-dkeSqx-5RSyUSIqXBExRevkMhBChONiFeuoDgtm0ZfPi9sw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+</div>
+<div class="p-8 flex flex-col justify-between h-full">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Zuid-Nederland</h2>
+<span class="text-primary-container material-symbols-outlined text-4xl">terrain</span>
+</div>
+<p class="text-on-surface-variant mb-8 line-clamp-2">
+                            Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to the southern hills.
+                        </p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold">NB</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">LI</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">ZE</div>
+</div>
+<div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+<span class="text-sm font-bold uppercase tracking-widest text-primary">Start Training</span>
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Regions / Quick Actions -->
+<div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-low p-6 rounded-lg flex items-center gap-4 group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary">map</span>
+</div>
+<div>
+<h3 class="font-bold text-on-surface">Oost-Nederland</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Coming Soon</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg flex items-center gap-4 group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary">public</span>
+</div>
+<div>
+<h3 class="font-bold text-on-surface">Noord-Nederland</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Coming Soon</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg flex items-center gap-4 group cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary">history</span>
+</div>
+<div>
+<h3 class="font-bold text-on-surface">Recent Practice</h3>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">View Progress</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-3 pb-6 px-4 bg-white shadow-[0_-10px_30px_rgba(0,0,0,0.05)] rounded-t-3xl border-t border-slate-100">
+<a class="flex flex-col items-center text-blue-600" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-[10px] font-bold uppercase tracking-widest mt-1">Score</span>
+</a>
+<a class="flex flex-col items-center text-slate-400" href="#">
+<span class="material-symbols-outlined">cancel</span>
+<span class="text-[10px] font-bold uppercase tracking-widest mt-1">Wrong</span>
+</a>
+<a class="flex flex-col items-center text-slate-400" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-[10px] font-bold uppercase tracking-widest mt-1">Lives</span>
+</a>
+<a class="flex flex-col items-center text-slate-400" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="text-[10px] font-bold uppercase tracking-widest mt-1">Streak</span>
+</a>
+</nav>
+<!-- Decorative Element -->
+<div class="fixed top-0 right-0 -z-10 w-1/3 h-1/2 opacity-20 pointer-events-none">
+<div class="w-full h-full hero-gradient blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+</div>
+</body></html>
