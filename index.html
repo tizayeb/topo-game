@@ -133,68 +133,68 @@
     <div id="balloon-container"></div>
 
     <!-- Region Selection Overlay -->
-    <div id="region-overlay" class="fixed inset-0 z-[3000] bg-background flex flex-col overflow-y-auto">
-        <main class="min-h-screen pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto w-full">
-            <div class="mb-12 md:mb-20">
-                <p id="label-region-metadata" class="text-[0.75rem] font-bold tracking-[0.05em] text-primary uppercase mb-3 text-center md:text-left">REGION SELECTION</p>
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight text-on-surface mb-6 md:ml-[-2px] text-center md:text-left leading-tight">
+    <div id="region-overlay" class="fixed inset-0 z-[3000] bg-background flex flex-col lg:h-screen overflow-y-auto lg:overflow-hidden">
+        <main class="min-h-screen lg:min-h-0 lg:h-full pt-16 lg:pt-8 pb-12 px-6 lg:px-12 max-w-7xl mx-auto w-full flex flex-col justify-center gap-4 lg:gap-6">
+            <div class="mb-4 lg:mb-2 flex-shrink-0">
+                <p id="label-region-metadata" class="text-[0.7rem] font-bold tracking-[0.05em] text-primary uppercase mb-1 text-center md:text-left">REGION SELECTION</p>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-on-surface mb-2 md:ml-[-2px] text-center md:text-left leading-tight">
                     <span id="label-select-region">Choose your</span> <span class="text-primary-container">territory.</span>
                 </h1>
-                <p id="label-region-desc" class="text-lg text-on-surface-variant max-w-xl leading-relaxed mx-auto md:mx-0 text-center md:text-left">
+                <p id="label-region-desc" class="text-sm md:text-base text-on-surface-variant max-w-xl leading-relaxed mx-auto md:mx-0 text-center md:text-left">
                     Select a province or region to begin your cartographic journey. Master the geography of the Netherlands through precision practice.
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 lg:flex-1 lg:min-h-0 items-stretch">
                 <!-- West-Nederland -->
-                <div onclick="selectRegion('west')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer">
-                    <div class="aspect-[16/10] overflow-hidden relative">
+                <div onclick="selectRegion('west')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col">
+                    <div class="flex-1 min-h-[120px] lg:min-h-0 overflow-hidden relative">
                         <img src="map-west.JPG" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
                     </div>
-                    <div class="p-8 flex flex-col justify-between h-full">
+                    <div class="p-5 flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-4">
-                                <h2 id="label-west" class="text-3xl font-extrabold tracking-tight text-on-surface">West-Nederland</h2>
-                                <span class="text-primary-container material-symbols-outlined text-4xl">explore</span>
+                            <div class="flex items-center justify-between mb-1">
+                                <h2 id="label-west" class="text-xl lg:text-2xl font-extrabold tracking-tight text-on-surface">West-Nederland</h2>
+                                <span class="text-primary-container material-symbols-outlined text-2xl">explore</span>
                             </div>
-                            <p class="text-on-surface-variant mb-8 line-clamp-2">Master the Randstad, North Holland, and South Holland. Includes coastal navigation.</p>
+                            <p class="text-xs lg:text-sm text-on-surface-variant line-clamp-2">Master the Randstad, North Holland, and South Holland. Includes coastal navigation.</p>
                         </div>
-                        <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center justify-between mt-3">
                             <div class="flex -space-x-2">
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold">NH</div>
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">ZH</div>
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">UT</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[8px] font-bold">NH</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[8px] font-bold">ZH</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[8px] font-bold">UT</div>
                             </div>
                             <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
-                                <span id="label-start-1" class="text-sm font-bold uppercase tracking-widest text-primary">Start Training</span>
-                                <span class="material-symbols-outlined text-primary">arrow_forward</span>
+                                <span id="label-start-1" class="text-[10px] font-bold uppercase tracking-widest text-primary">Start Training</span>
+                                <span class="material-symbols-outlined text-primary text-lg">arrow_forward</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Zuid-Nederland -->
-                <div onclick="selectRegion('south')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer">
-                    <div class="aspect-[16/10] overflow-hidden relative">
+                <div onclick="selectRegion('south')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col">
+                    <div class="flex-1 min-h-[120px] lg:min-h-0 overflow-hidden relative">
                         <img src="map-south.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
                     </div>
-                    <div class="p-8 flex flex-col justify-between h-full">
+                    <div class="p-5 flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-4">
-                                <h2 id="label-south" class="text-3xl font-extrabold tracking-tight text-on-surface">Zuid-Nederland</h2>
-                                <span class="text-primary-container material-symbols-outlined text-4xl">terrain</span>
+                            <div class="flex items-center justify-between mb-1">
+                                <h2 id="label-south" class="text-xl lg:text-2xl font-extrabold tracking-tight text-on-surface">Zuid-Nederland</h2>
+                                <span class="text-primary-container material-symbols-outlined text-2xl">terrain</span>
                             </div>
-                            <p class="text-on-surface-variant mb-8 line-clamp-2">Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.</p>
+                            <p class="text-xs lg:text-sm text-on-surface-variant line-clamp-2">Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.</p>
                         </div>
-                        <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center justify-between mt-3">
                             <div class="flex -space-x-2">
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold">NB</div>
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">LI</div>
-                                <div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[10px] font-bold">ZE</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[8px] font-bold">NB</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[8px] font-bold">LI</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[8px] font-bold">ZE</div>
                             </div>
                             <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
-                                <span id="label-start-2" class="text-sm font-bold uppercase tracking-widest text-primary">Start Training</span>
-                                <span class="material-symbols-outlined text-primary">arrow_forward</span>
+                                <span id="label-start-2" class="text-[10px] font-bold uppercase tracking-widest text-primary">Start Training</span>
+                                <span class="material-symbols-outlined text-primary text-lg">arrow_forward</span>
                             </div>
                         </div>
                     </div>
