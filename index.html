@@ -138,7 +138,7 @@
             <div class="mb-4 lg:mb-2 flex-shrink-0">
                 <p id="label-region-metadata" class="text-[0.7rem] font-bold tracking-[0.05em] text-primary uppercase mb-1 text-center md:text-left">REGION SELECTION</p>
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-on-surface mb-2 md:ml-[-2px] text-center md:text-left leading-tight">
-                    <span id="label-select-region">Choose your</span> <span class="text-primary-container">territory.</span>
+                    <span id="label-select-region">Choose your</span> <span id="label-territory" class="text-primary-container">territory.</span>
                 </h1>
                 <p id="label-region-desc" class="text-sm md:text-base text-on-surface-variant max-w-xl leading-relaxed mx-auto md:mx-0 text-center md:text-left">
                     Select a province or region to begin your cartographic journey. Master the geography of the Netherlands through precision practice.
@@ -341,7 +341,8 @@
                 incorrect: "Incorrect! It was",
                 lives: "Lives",
                 shield: "Shield Used! Try again!",
-                selectRegion: "Select Your Region",
+                selectRegion: "Choose your",
+                territory: "territory.",
                 west: "West Netherlands",
                 south: "South Netherlands",
                 menu: "Menu",
@@ -364,7 +365,8 @@
                 incorrect: "Onjuist! Het was",
                 lives: "Levens",
                 shield: "Schild Gebruikt! Probeer opnieuw!",
-                selectRegion: "Selecteer Je Regio",
+                selectRegion: "Kies je",
+                territory: "gebied.",
                 west: "West-Nederland",
                 south: "Zuid-Nederland",
                 menu: "Menu",
@@ -387,7 +389,8 @@
                 incorrect: "Yanlış! Cevap şuydu",
                 lives: "Canlar",
                 shield: "Kalkan Kullanıldı! Tekrar dene!",
-                selectRegion: "Bölgeni Seç",
+                selectRegion: "Seç",
+                territory: "bölgeni.",
                 west: "Batı Hollanda",
                 south: "Güney Hollanda",
                 menu: "Menü",
@@ -636,6 +639,7 @@
             document.getElementById('label-best').textContent = t.best;
             document.getElementById('label-streak').textContent = t.streak;
             document.getElementById('label-select-region').textContent = t.selectRegion;
+            document.getElementById('label-territory').textContent = t.territory;
             document.getElementById('label-west').textContent = t.west;
             document.getElementById('label-south').textContent = t.south;
             document.getElementById('label-west-desc').textContent = t.westDesc;
