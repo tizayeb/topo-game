@@ -157,7 +157,7 @@
                                 <h2 id="label-west" class="text-xl lg:text-2xl font-extrabold tracking-tight text-on-surface">West-Nederland</h2>
                                 <span class="text-primary-container material-symbols-outlined text-2xl">explore</span>
                             </div>
-                            <p class="text-xs lg:text-sm text-on-surface-variant line-clamp-2">Master the Randstad, North Holland, and South Holland. Includes coastal navigation.</p>
+                            <p id="label-west-desc" class="text-xs lg:text-sm text-on-surface-variant line-clamp-2">Master the Randstad, North Holland, and South Holland. Includes coastal navigation.</p>
                         </div>
                         <div class="flex items-center justify-between mt-3">
                             <div class="flex -space-x-2">
@@ -184,7 +184,7 @@
                                 <h2 id="label-south" class="text-xl lg:text-2xl font-extrabold tracking-tight text-on-surface">Zuid-Nederland</h2>
                                 <span class="text-primary-container material-symbols-outlined text-2xl">terrain</span>
                             </div>
-                            <p class="text-xs lg:text-sm text-on-surface-variant line-clamp-2">Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.</p>
+                            <p id="label-south-desc" class="text-xs lg:text-sm text-on-surface-variant line-clamp-2">Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.</p>
                         </div>
                         <div class="flex items-center justify-between mt-3">
                             <div class="flex -space-x-2">
@@ -347,7 +347,9 @@
                 menu: "Menu",
                 startTraining: "Start Training",
                 instruction: "Select the correct location from the options below.",
-                inputTitle: "Your Answer"
+                inputTitle: "Your Answer",
+                westDesc: "Master the Randstad, North Holland, and South Holland. Includes coastal navigation.",
+                southDesc: "Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills."
             },
             nl: {
                 find: "Zoek de locatie voor",
@@ -368,7 +370,9 @@
                 menu: "Menu",
                 startTraining: "Start Training",
                 instruction: "Selecteer de juiste locatie uit de onderstaande opties.",
-                inputTitle: "Jouw Antwoord"
+                inputTitle: "Jouw Antwoord",
+                westDesc: "Beheers de Randstad, Noord-Holland en Zuid-Holland. Inclusief kustnavigatie.",
+                southDesc: "Verken de gevarieerde landschappen van Noord-Brabant en Limburg. Van rivierbekkens tot heuvels."
             },
             tr: {
                 find: "Şu konumun yerini bul",
@@ -389,7 +393,9 @@
                 menu: "Menü",
                 startTraining: "Eğitime Başla",
                 instruction: "Aşağıdaki seçeneklerden doğru konumu seçin.",
-                inputTitle: "Senin Cevabın"
+                inputTitle: "Senin Cevabın",
+                westDesc: "Randstad, Kuzey Hollanda ve Güney Hollanda'da uzmanlaşın. Kıyı navigasyonunu içerir.",
+                southDesc: "Kuzey Brabant ve Limburg'un çeşitli manzaralarını keşfedin. Nehir yataklarından tepelere kadar."
             }
         };
 
@@ -632,6 +638,8 @@
             document.getElementById('label-select-region').textContent = t.selectRegion;
             document.getElementById('label-west').textContent = t.west;
             document.getElementById('label-south').textContent = t.south;
+            document.getElementById('label-west-desc').textContent = t.westDesc;
+            document.getElementById('label-south-desc').textContent = t.southDesc;
             document.getElementById('label-region-metadata').textContent = t.selectRegion.toUpperCase();
             document.getElementById('label-region-desc').textContent = t.instruction;
             document.getElementById('label-input-title').textContent = t.inputTitle;
