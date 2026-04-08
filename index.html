@@ -136,7 +136,9 @@
     <div id="region-overlay" class="fixed inset-0 z-[3000] bg-background flex flex-col lg:h-screen overflow-y-auto lg:overflow-hidden">
         <main class="min-h-screen lg:min-h-0 lg:h-full pt-16 lg:pt-8 pb-12 px-6 lg:px-12 max-w-7xl mx-auto w-full flex flex-col justify-center gap-4 lg:gap-6">
             <div class="mb-4 lg:mb-2 flex-shrink-0">
-                <p id="label-region-metadata" class="text-[0.7rem] font-bold tracking-[0.05em] text-primary uppercase mb-1 text-center md:text-left">REGION SELECTION</p>
+                <p class="text-[0.7rem] font-bold tracking-[0.05em] text-primary uppercase mb-1 text-center md:text-left">
+                    <span id="label-region-metadata">REGION SELECTION</span> • 🏆 <span id="label-best-hub">BEST</span>: <span id="best-streak-hub" class="text-primary-container">0</span>
+                </p>
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-on-surface mb-2 md:ml-[-2px] text-center md:text-left leading-tight">
                     <span id="label-select-region">Choose your</span> <span id="label-territory" class="text-primary-container">territory.</span>
                 </h1>
@@ -204,9 +206,9 @@
     </div>
 
     <!-- Top Navigation Bar -->
-    <header class="fixed top-0 w-full z-50 glass-nav shadow-[0px_20px_40px_rgba(9,29,46,0.06)] flex justify-between items-center px-6 py-3">
+    <header class="fixed top-0 w-full z-[4000] glass-nav shadow-[0px_20px_40px_rgba(9,29,46,0.06)] flex justify-between items-center px-6 py-3">
         <div class="flex items-center gap-4">
-            <button onclick="showMenu()" class="p-2 hover:bg-slate-100/50 transition-colors active:scale-95 duration-200 rounded-full">
+            <button id="header-menu-btn" onclick="showMenu()" class="p-2 hover:bg-slate-100/50 transition-colors active:scale-95 duration-200 rounded-full">
                 <span class="material-symbols-outlined text-on-surface-variant">menu</span>
             </button>
             <span class="text-xl font-black tracking-tighter text-blue-900">TopoTrainer.nl</span>
@@ -579,6 +581,8 @@
         const mapImg = document.getElementById('map-img');
         const shieldModal = document.getElementById('shield-modal');
         const modalLivesContainer = document.getElementById('modal-lives-container');
+        const headerMenuBtn = document.getElementById('header-menu-btn');
+        const bestStreakHubEl = document.getElementById('best-streak-hub');
 
         function init() {
             loadBestStreak();
@@ -598,6 +602,7 @@
         function selectRegion(regionId) {
             state.currentRegion = regionId;
             regionOverlay.style.display = 'none';
+            headerMenuBtn.style.visibility = 'visible';
             mapImg.src = regions[regionId].image;
             
             state.sessionScore = 0;
@@ -610,6 +615,7 @@
 
         function showMenu() {
             regionOverlay.style.display = 'flex';
+            headerMenuBtn.style.visibility = 'hidden';
         }
 
         function triggerCelebration() {
@@ -645,6 +651,7 @@
             document.getElementById('label-west-desc').textContent = t.westDesc;
             document.getElementById('label-south-desc').textContent = t.southDesc;
             document.getElementById('label-region-metadata').textContent = t.selectRegion.toUpperCase();
+            document.getElementById('label-best-hub').textContent = t.best.split(' ')[0].toUpperCase();
             document.getElementById('label-region-desc').textContent = t.instruction;
             document.getElementById('label-input-title').textContent = t.inputTitle;
             document.getElementById('modal-shield-title').textContent = t.shield;
@@ -816,6 +823,7 @@
             wrongScoreEl.textContent = state.wrongScore;
             livesDisplayEl.textContent = "❤️".repeat(state.lives) + "🖤".repeat(3 - state.lives);
             bestStreakEl.textContent = state.bestStreak;
+            bestStreakHubEl.textContent = state.bestStreak;
             currentStreakEl.textContent = state.currentStreak;
         }
 
