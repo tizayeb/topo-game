@@ -146,7 +146,7 @@
                     Select a province or region to begin your cartographic journey. Master the geography of the Netherlands through precision practice.
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 lg:flex-1 lg:min-h-0 items-stretch">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 lg:flex-1 lg:min-h-0 items-stretch">
                 <!-- West-Nederland -->
                 <div onclick="selectRegion('west')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col">
                     <div class="flex-1 min-h-[120px] lg:min-h-0 overflow-hidden relative">
@@ -196,6 +196,33 @@
                             </div>
                             <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
                                 <span id="label-start-2" class="text-[10px] font-bold uppercase tracking-widest text-primary">Start Training</span>
+                                <span class="material-symbols-outlined text-primary text-lg">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Europa -->
+                <div onclick="selectRegion('europe')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col">
+                    <div class="flex-1 min-h-[120px] lg:min-h-0 overflow-hidden relative">
+                        <img src="map-europe.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+                    </div>
+                    <div class="p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h2 id="label-europe" class="text-xl lg:text-2xl font-extrabold tracking-tight text-on-surface">Europa</h2>
+                                <span class="text-primary-container material-symbols-outlined text-2xl">public</span>
+                            </div>
+                            <p id="label-europe-desc" class="text-xs lg:text-sm text-on-surface-variant line-clamp-2">Beheers landen, hoofdsteden, wateren en gebergten op het Europese continent.</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="flex -space-x-2">
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[8px] font-bold">EU</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[8px] font-bold">FR</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[8px] font-bold">DE</div>
+                            </div>
+                            <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+                                <span id="label-start-3" class="text-[10px] font-bold uppercase tracking-widest text-primary">Start Training</span>
                                 <span class="material-symbols-outlined text-primary text-lg">arrow_forward</span>
                             </div>
                         </div>
@@ -347,12 +374,15 @@
                 territory: "territory.",
                 west: "West Netherlands",
                 south: "South Netherlands",
+                europe: "Europe",
                 menu: "Menu",
                 startTraining: "Start Training",
                 instruction: "Select the correct location from the options below.",
+                regionDesc: "Select a province or region to begin your cartographic journey. Master geography through precision practice.",
                 inputTitle: "Your Answer",
                 westDesc: "Master the Randstad, North Holland, and South Holland. Includes coastal navigation.",
-                southDesc: "Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills."
+                southDesc: "Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.",
+                europeDesc: "Master countries, capitals, waters, and mountains across the European continent."
             },
             nl: {
                 find: "Zoek de locatie voor",
@@ -371,12 +401,15 @@
                 territory: "gebied.",
                 west: "West-Nederland",
                 south: "Zuid-Nederland",
+                europe: "Europa",
                 menu: "Menu",
                 startTraining: "Start Training",
                 instruction: "Selecteer de juiste locatie uit de onderstaande opties.",
+                regionDesc: "Selecteer een provincie of regio om je cartografische reis te beginnen. Beheers topografie door middel van precisieoefening.",
                 inputTitle: "Jouw Antwoord",
                 westDesc: "Beheers de Randstad, Noord-Holland en Zuid-Holland. Inclusief kustnavigatie.",
-                southDesc: "Verken de gevarieerde landschappen van Noord-Brabant en Limburg. Van rivierbekkens tot heuvels."
+                southDesc: "Verken de gevarieerde landschappen van Noord-Brabant en Limburg. Van rivierbekkens tot heuvels.",
+                europeDesc: "Beheers landen, hoofdsteden, wateren en gebergten op het Europese continent."
             },
             tr: {
                 find: "Şu konumun yerini bul",
@@ -395,12 +428,15 @@
                 territory: "seç.",
                 west: "Batı Hollanda",
                 south: "Güney Hollanda",
+                europe: "Avrupa",
                 menu: "Menü",
                 startTraining: "Eğitime Başla",
                 instruction: "Aşağıdaki seçeneklerden doğru konumu seçin.",
+                regionDesc: "Harita yolculuğunuza başlamak için bir bölge seçin. Hassas alıştırmalarla coğrafyada uzmanlaşın.",
                 inputTitle: "Senin Cevabın",
                 westDesc: "Randstad, Kuzey Hollanda ve Güney Hollanda'da uzmanlaşın. Kıyı navigasyonunu içerir.",
-                southDesc: "Kuzey Brabant ve Limburg'un çeşitli manzaralarını keşfedin. Nehir yataklarından tepelere kadar."
+                southDesc: "Kuzey Brabant ve Limburg'un çeşitli manzaralarını keşfedin. Nehir yataklarından tepelere kadar.",
+                europeDesc: "Avrupa kıtasındaki ülkeleri, başkentleri, suları ve dağları öğrenin."
             }
         };
 
@@ -546,6 +582,93 @@
                     { question: { en: "Which province is in the southwest?", nl: "Welke provincie ligt in het zuidwesten?", tr: "Güneybatıdaki il hangisidir?" }, name: "Zeeland" },
                     { question: { en: "Which province is between Zeeland and Limburg?", nl: "Welke provincie ligt tussen Zeeland en Limburg?", tr: "Zeeland ile Limburg arasındaki il hangisidir?" }, name: "Noord-Brabant" }
                 ]
+            },
+            europe: {
+                name: "Europa",
+                image: "map-europe.jpg",
+                data: [
+                    { id: "A", name: "IJsland" },
+                    { id: "B", name: "Noorwegen" },
+                    { id: "C", name: "Zweden" },
+                    { id: "D", name: "Finland" },
+                    { id: "E", name: "Rusland" },
+                    { id: "F", name: "Polen" },
+                    { id: "G", name: "Denemarken" },
+                    { id: "H", name: "Duitsland" },
+                    { id: "I", name: "België" },
+                    { id: "J", name: "Verenigd Koninkrijk" },
+                    { id: "K", name: "Ierland" },
+                    { id: "L", name: "Frankrijk" },
+                    { id: "M", name: "Zwitserland" },
+                    { id: "N", name: "Oostenrijk" },
+                    { id: "O", name: "Portugal" },
+                    { id: "P", name: "Spanje" },
+                    { id: "Q", name: "Italië" },
+                    { id: "R", name: "Griekenland" },
+                    { id: "1", name: "Oslo" },
+                    { id: "2", name: "Stockholm" },
+                    { id: "3", name: "Helsinki" },
+                    { id: "4", name: "Moskou" },
+                    { id: "5", name: "Warschau" },
+                    { id: "6", name: "Kopenhagen" },
+                    { id: "7", name: "Berlijn" },
+                    { id: "8", name: "Brussel" },
+                    { id: "9", name: "Londen" },
+                    { id: "10", name: "Dublin" },
+                    { id: "11", name: "Parijs" },
+                    { id: "12", name: "Bern" },
+                    { id: "13", name: "Wenen" },
+                    { id: "14", name: "Lissabon" },
+                    { id: "15", name: "Madrid" },
+                    { id: "16", name: "Rome" },
+                    { id: "17", name: "Athene" },
+                    { id: "a", name: "Atlantische Oceaan" },
+                    { id: "b", name: "Noordzee" },
+                    { id: "c", name: "Oostzee" },
+                    { id: "d", name: "Middellandse Zee" },
+                    { id: "e", name: "Zwarte Zee" },
+                    { id: "f", name: "Rijn" },
+                    { id: "g", name: "Donau" },
+                    { id: "h", name: "Rhône" },
+                    { id: "i", name: "Pyreneeën" },
+                    { id: "j", name: "Alpen" },
+                    { id: "k", name: "Oeralgebergte" },
+                    { id: "l", name: "Kaukasus" },
+                    { question: { en: "What is the capital of France (L)?", nl: "Wat is de hoofdstad van Frankrijk (L)?", tr: "Fransa'nın (L) başkenti neresidir?" }, name: "Parijs" },
+                    { question: { en: "What is the capital of Germany (H)?", nl: "Wat is de hoofdstad van Duitsland (H)?", tr: "Almanya'nın (H) başkenti neresidir?" }, name: "Berlijn" },
+                    { question: { en: "What is the capital of the United Kingdom (J)?", nl: "Wat is de hoofdstad van het Verenigd Koninkrijk (J)?", tr: "Birleşik Krallık'ın (J) başkenti neresidir?" }, name: "Londen" },
+                    { question: { en: "What is the capital of Spain (P)?", nl: "Wat is de hoofdstad van Spanje (P)?", tr: "İspanya'nın (P) başkenti neresidir?" }, name: "Madrid" },
+                    { question: { en: "What is the capital of Italy (Q)?", nl: "Wat is de hoofdstad van Italië (Q)?", tr: "İtalya'nın (Q) başkenti neresidir?" }, name: "Rome" },
+                    { question: { en: "What is the capital of Russia (E)?", nl: "Wat is de hoofdstad van Rusland (E)?", tr: "Rusya'nın (E) başkenti neresidir?" }, name: "Moskou" },
+                    { question: { en: "What is the capital of Poland (F)?", nl: "Wat is de hoofdstad van Polen (F)?", tr: "Polonya'nın (F) başkenti neresidir?" }, name: "Warschau" },
+                    { question: { en: "What is the capital of Norway (B)?", nl: "Wat is de hoofdstad van Noorwegen (B)?", tr: "Norveç'in (B) başkenti neresidir?" }, name: "Oslo" },
+                    { question: { en: "What is the capital of Sweden (C)?", nl: "Wat is de hoofdstad van Zweden (C)?", tr: "İsveç'in (C) başkenti neresidir?" }, name: "Stockholm" },
+                    { question: { en: "What is the capital of Finland (D)?", nl: "Wat is de hoofdstad van Finland (D)?", tr: "Finlandiya'nın (D) başkenti neresidir?" }, name: "Helsinki" },
+                    { question: { en: "What is the capital of Denmark (G)?", nl: "Wat is de hoofdstad van Denemarken (G)?", tr: "Danimarka'nın (G) başkenti neresidir?" }, name: "Kopenhagen" },
+                    { question: { en: "What is the capital of Belgium (I)?", nl: "Wat is de hoofdstad van België (I)?", tr: "Belçika'nın (I) başkenti neresidir?" }, name: "Brussel" },
+                    { question: { en: "What is the capital of Ireland (K)?", nl: "Wat is de hoofdstad van Ierland (K)?", tr: "İrlanda'nın (K) başkenti neresidir?" }, name: "Dublin" },
+                    { question: { en: "What is the capital of Switzerland (M)?", nl: "Wat is de hoofdstad van Zwitserland (M)?", tr: "İsviçre'nin (M) başkenti neresidir?" }, name: "Bern" },
+                    { question: { en: "What is the capital of Austria (N)?", nl: "Wat is de hoofdstad van Oostenrijk (N)?", tr: "Avusturya'nın (N) başkenti neresidir?" }, name: "Wenen" },
+                    { question: { en: "What is the capital of Portugal (O)?", nl: "Wat is de hoofdstad van Portugal (O)?", tr: "Portekiz'in (O) başkenti neresidir?" }, name: "Lissabon" },
+                    { question: { en: "What is the capital of Greece (R)?", nl: "Wat is de hoofdstad van Griekenland (R)?", tr: "Yunanistan'ın (R) başkenti neresidir?" }, name: "Athene" },
+                    { question: { en: "Which mountain range lies on the border between France and Spain?", nl: "Welk gebergte ligt op de grens tussen Frankrijk en Spanje?", tr: "Fransa ile İspanya sınırındaki sıradağ hangisidir?" }, name: "Pyreneeën" },
+                    { question: { en: "Which high mountain range spans Switzerland and Austria?", nl: "Welk hooggebergte strekt zich uit over Zwitserland en Oostenrijk?", tr: "İsviçre ve Avusturya boyunca uzanan yüksek sıradağ hangisidir?" }, name: "Alpen" },
+                    { question: { en: "Which mountain range marks the eastern boundary of Europe in Russia?", nl: "Welk gebergte vormt de oostelijke grens van Europa in Rusland?", tr: "Rusya'da Avrupa'nın doğu sınırını çizen sıradağ hangisidir?" }, name: "Oeralgebergte" },
+                    { question: { en: "Which mountain range lies between the Black Sea and Caspian Sea?", nl: "Welk gebergte ligt tussen de Zwarte Zee en de Kaspische Zee?", tr: "Karadeniz ile Hazar Denizi arasındaki sıradağ hangisidir?" }, name: "Kaukasus" },
+                    { question: { en: "Which large sea lies south of Europe?", nl: "Welke grote zee ligt ten zuiden van Europa?", tr: "Avrupa'nın güneyindeki büyük deniz hangisidir?" }, name: "Middellandse Zee" },
+                    { question: { en: "Which sea lies east of Sweden (C)?", nl: "Welke zee ligt ten oosten van Zweden (C)?", tr: "İsveç'in (C) doğusundaki deniz hangisidir?" }, name: "Oostzee" },
+                    { question: { en: "Which sea lies between the UK (J) and Norway (B)?", nl: "Welke zee ligt tussen het Verenigd Koninkrijk (J) en Noorwegen (B)?", tr: "Birleşik Krallık (J) ile Norveç (B) arasındaki deniz hangisidir?" }, name: "Noordzee" },
+                    { question: { en: "Which sea lies south of Russia (E) and Ukraine?", nl: "Welke zee ligt ten zuiden van Rusland (E) en Oekraïne?", tr: "Rusya'nın (E) ve Ukrayna'nın güneyindeki deniz hangisidir?" }, name: "Zwarte Zee" },
+                    { question: { en: "Which ocean lies to the west of Europe?", nl: "Welke oceaan ligt ten westen van Europa?", tr: "Avrupa'nın batısındaki okyanus hangisidir?" }, name: "Atlantische Oceaan" },
+                    { question: { en: "Which river flows through Germany (H) into the North Sea?", nl: "Welke rivier stroomt door Duitsland (H) naar de Noordzee?", tr: "Almanya'dan (H) geçip Kuzey Denizi'ne dökülen nehir hangisidir?" }, name: "Rijn" },
+                    { question: { en: "Which long river flows through Central Europe into the Black Sea?", nl: "Welke lange rivier stroomt door Midden-Europa naar de Zwarte Zee?", tr: "Orta Avrupa'dan geçerek Karadeniz'e dökülen uzun nehir hangisidir?" }, name: "Donau" },
+                    { question: { en: "Which river flows through southern France into the Mediterranean Sea?", nl: "Welke rivier stroomt door Zuid-Frankrijk naar de Middellandse Zee?", tr: "Güney Fransa'dan geçerek Akdeniz'e dökülen nehir hangisidir?" }, name: "Rhône" },
+                    { question: { en: "Which island country is located in the far northwest Atlantic (A)?", nl: "Welk eilandland ligt in het uiterste noordwesten van de Atlantische Oceaan (A)?", tr: "Kuzeybatı Atlantik'te yer alan ada ülkesi hangisidir (A)?" }, name: "IJsland" },
+                    { question: { en: "Which country is situated west of Spain (P)?", nl: "Welk land ligt ten westen van Spanje (P)?", tr: "İspanya'nın (P) batısında yer alan ülke hangisidir?" }, name: "Portugal" },
+                    { question: { en: "Which country lies directly south of Norway and Sweden across the water (G)?", nl: "Welk land ligt direct ten zuiden van Noorwegen en Zweden over het water (G)?", tr: "Norveç ve İsveç'in suyun karşısında doğrudan güneyinde yer alan ülke hangisidir (G)?" }, name: "Denemarken" },
+                    { question: { en: "Which country borders Germany (H) directly to the east (F)?", nl: "Welk land grenst direct ten oosten aan Duitsland (H)?", tr: "Almanya'nın (H) doğrudan doğu komşusu olan ülke hangisidir (F)?" }, name: "Polen" },
+                    { question: { en: "Which boot-shaped country extends into the Mediterranean Sea (Q)?", nl: "Welk laarsvormig land steekt uit in de Middellandse Zee (Q)?", tr: "Akdeniz'e doğru uzanan çizme şeklindeki ülke hangisidir (Q)?" }, name: "Italië" }
+                ]
             }
         };
 
@@ -648,15 +771,18 @@
             document.getElementById('label-territory').textContent = t.territory;
             document.getElementById('label-west').textContent = t.west;
             document.getElementById('label-south').textContent = t.south;
+            document.getElementById('label-europe').textContent = t.europe;
             document.getElementById('label-west-desc').textContent = t.westDesc;
             document.getElementById('label-south-desc').textContent = t.southDesc;
+            document.getElementById('label-europe-desc').textContent = t.europeDesc;
             document.getElementById('label-region-metadata').textContent = t.selectRegion.toUpperCase();
             document.getElementById('label-best-hub').textContent = t.best.split(' ')[0].toUpperCase();
-            document.getElementById('label-region-desc').textContent = t.instruction;
+            document.getElementById('label-region-desc').textContent = t.regionDesc;
             document.getElementById('label-input-title').textContent = t.inputTitle;
             document.getElementById('modal-shield-title').textContent = t.shield;
             document.getElementById('label-start-1').textContent = t.startTraining;
             document.getElementById('label-start-2').textContent = t.startTraining;
+            document.getElementById('label-start-3').textContent = t.startTraining;
             
             textAnswerInput.placeholder = t.placeholder;
             submitBtn.textContent = t.submit;
@@ -706,7 +832,7 @@
             let options = [correct];
             while (options.length < 5) {
                 const random = data[Math.floor(Math.random() * data.length)];
-                if (!options.find(o => o.id === random.id && o.name === random.name)) {
+                if (!options.find(o => o.name === random.name)) {
                     options.push(random);
                 }
             }
