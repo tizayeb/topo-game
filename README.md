@@ -10,6 +10,7 @@
 - **West-Nederland:** Master the Randstad, North Holland, South Holland, and Utrecht.
 - **Zuid-Nederland:** Explore the provinces of Zeeland, Noord-Brabant, and Limburg.
 - **Europa:** Master countries, capitals, waters, and mountain ranges across the European continent.
+- **West-Europa:** Master the United Kingdom, France, Germany, Benelux, and surrounding regions.
 
 ### 🧠 Advanced Question Engine
 - **ID-Based Learning:** Identify locations based on alphanumeric markers (e.g., "Find: A").
@@ -55,7 +56,7 @@
 
 ### GitHub Pages (Recommended)
 This application is designed to be hosted easily on GitHub Pages:
-1.  Push the `index.html`, `map-west.JPG`, `map-south.jpg`, and `map-europe.jpg` files to a GitHub repository.
+1.  Push the `index.html`, `map-west.JPG`, `map-south.jpg`, `map-europe.jpg`, and `map-westeurope.png` files to a GitHub repository.
 2.  Go to **Settings > Pages**.
 3.  Select the `main` branch and click **Save**.
 
