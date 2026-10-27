@@ -16,6 +16,7 @@
 - **ID-Based Learning:** Identify locations based on alphanumeric markers (e.g., "Find: A").
 - **Spatial Reasoning:** Challenging text-based questions that test your understanding of relative distances and directions (e.g., *"Which city is 25km north east of Tilburg (9)?"*).
 - **Dual Modes:** Switch between **Multiple Choice** for guided practice and **Hard Mode** (manual text entry) for expert mastery.
+- **Interactive Map Zoom:** Click the map anytime while answering questions to enlarge and inspect small markers in a high-res lightbox view, and click again (or press Esc) to return.
 
 ### 🛡️ Gamification & Feedback
 - **Life & Shield System:** You start with 3 lives per question. Mistakes trigger a professional "Shield" pop-up, protecting your streak and allowing you to try again.

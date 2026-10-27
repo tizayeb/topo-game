@@ -294,6 +294,20 @@
         </div>
     </div>
 
+    <!-- Map Zoom Modal / Lightbox -->
+    <div id="map-modal" class="fixed inset-0 z-[2000] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 cursor-zoom-out select-none">
+        <div class="relative max-w-full max-h-full flex items-center justify-center">
+            <img id="map-modal-img" class="max-w-[96vw] max-h-[94vh] object-contain rounded-2xl shadow-2xl transition-transform duration-300 transform scale-95 cursor-zoom-out" src="" alt="Enlarged Map">
+            <button id="map-modal-close" class="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black/60 hover:bg-black/90 text-white rounded-full p-2.5 backdrop-blur-sm transition-colors flex items-center justify-center shadow-lg cursor-pointer" aria-label="Close">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/60 text-white/90 text-xs px-3.5 py-1.5 rounded-full backdrop-blur-sm hidden sm:flex items-center gap-1.5 shadow pointer-events-none">
+                <span class="material-symbols-outlined text-sm">zoom_out</span>
+                <span id="map-modal-hint">Küçültmek için tıklayın</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="flex-grow pt-16 pb-24 px-4 md:px-8 max-w-[1600px] mx-auto w-full flex flex-col gap-2 lg:gap-4 lg:pt-16 lg:pb-24">
         
@@ -312,8 +326,12 @@
             <div class="lg:col-span-8 relative group">
                 <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-container rounded-[40px] rotate-1 group-hover:rotate-0 transition-transform duration-500 opacity-5"></div>
                 <div class="relative bg-surface-container-lowest p-2 rounded-[40px] shadow-[0px_20px_40px_rgba(9,29,46,0.06)] overflow-hidden">
-                    <div class="aspect-video lg:h-[50vh] xl:h-[55vh] w-full relative bg-surface-container-low rounded-[32px] overflow-hidden flex items-center justify-center">
-                        <img id="map-img" class="max-w-full max-h-full object-contain" src="map-west.JPG">
+                    <div id="map-wrapper" class="aspect-video lg:h-[50vh] xl:h-[55vh] w-full relative bg-surface-container-low rounded-[32px] overflow-hidden flex items-center justify-center cursor-zoom-in group/zoom" title="Click to enlarge">
+                        <img id="map-img" class="max-w-full max-h-full object-contain cursor-zoom-in transition-transform duration-300 group-hover/zoom:scale-[1.02]" src="map-west.JPG" alt="Map">
+                        <div class="absolute bottom-3 right-3 bg-black/50 hover:bg-black/70 text-white px-2.5 py-1.5 rounded-full backdrop-blur-sm transition-all opacity-80 group-hover/zoom:opacity-100 flex items-center gap-1 shadow pointer-events-none">
+                            <span class="material-symbols-outlined text-base">zoom_in</span>
+                            <span id="map-zoom-badge" class="text-[11px] font-semibold tracking-wide pr-0.5">Büyüt</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -411,7 +429,9 @@
                 westDesc: "Master the Randstad, North Holland, and South Holland. Includes coastal navigation.",
                 southDesc: "Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.",
                 europeDesc: "Master countries, capitals, waters, and mountains across the European continent.",
-                westEuropeDesc: "Master the United Kingdom, France, Germany, Benelux, and surrounding regions."
+                westEuropeDesc: "Master the United Kingdom, France, Germany, Benelux, and surrounding regions.",
+                zoomIn: "Enlarge",
+                zoomOut: "Click map to return"
             },
             nl: {
                 find: "Zoek de locatie voor",
@@ -440,7 +460,9 @@
                 westDesc: "Beheers de Randstad, Noord-Holland en Zuid-Holland. Inclusief kustnavigatie.",
                 southDesc: "Verken de gevarieerde landschappen van Noord-Brabant en Limburg. Van rivierbekkens tot heuvels.",
                 europeDesc: "Beheers landen, hoofdsteden, wateren en gebergten op het Europese continent.",
-                westEuropeDesc: "Beheers het Verenigd Koninkrijk, Frankrijk, Duitsland, de Benelux en meer."
+                westEuropeDesc: "Beheers het Verenigd Koninkrijk, Frankrijk, Duitsland, de Benelux en meer.",
+                zoomIn: "Vergroten",
+                zoomOut: "Klik om te verkleinen"
             },
             tr: {
                 find: "Şu konumun yerini bul",
@@ -469,7 +491,9 @@
                 westDesc: "Randstad, Kuzey Hollanda ve Güney Hollanda'da uzmanlaşın. Kıyı navigasyonunu içerir.",
                 southDesc: "Kuzey Brabant ve Limburg'un çeşitli manzaralarını keşfedin. Nehir yataklarından tepelere kadar.",
                 europeDesc: "Avrupa kıtasındaki ülkeleri, başkentleri, suları ve dağları öğrenin.",
-                westEuropeDesc: "Birleşik Krallık, Fransa, Almanya, Benelüks ve çevre bölgelerde uzmanlaşın."
+                westEuropeDesc: "Birleşik Krallık, Fransa, Almanya, Benelüks ve çevre bölgelerde uzmanlaşın.",
+                zoomIn: "Büyüt",
+                zoomOut: "Küçültmek için tıklayın"
             }
         };
 
@@ -833,6 +857,37 @@
         const headerMenuBtn = document.getElementById('header-menu-btn');
         const bestStreakHubEl = document.getElementById('best-streak-hub');
 
+        // Map Zoom Elements
+        const mapModal = document.getElementById('map-modal');
+        const mapModalImg = document.getElementById('map-modal-img');
+        const mapModalClose = document.getElementById('map-modal-close');
+        const mapWrapper = document.getElementById('map-wrapper');
+
+        let isMapZoomed = false;
+
+        function openMapZoom() {
+            if (!state.currentRegion) return;
+            mapModalImg.src = mapImg.src;
+            mapModal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                mapModal.classList.remove('opacity-0');
+                mapModalImg.classList.remove('scale-95');
+                mapModalImg.classList.add('scale-100');
+            });
+            isMapZoomed = true;
+        }
+
+        function closeMapZoom() {
+            if (!isMapZoomed) return;
+            mapModal.classList.add('opacity-0');
+            mapModalImg.classList.remove('scale-100');
+            mapModalImg.classList.add('scale-95');
+            setTimeout(() => {
+                mapModal.classList.add('hidden');
+            }, 300);
+            isMapZoomed = false;
+        }
+
         function init() {
             loadBestStreak();
             updateLabels();
@@ -846,13 +901,28 @@
                 state.lang = e.target.value;
                 updateLabels();
             });
+
+            // Map Zoom Events
+            mapWrapper.addEventListener('click', openMapZoom);
+            mapModal.addEventListener('click', closeMapZoom);
+            mapModalClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeMapZoom();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isMapZoomed) {
+                    closeMapZoom();
+                }
+            });
         }
 
         function selectRegion(regionId) {
+            closeMapZoom();
             state.currentRegion = regionId;
             regionOverlay.style.display = 'none';
             headerMenuBtn.style.visibility = 'visible';
             mapImg.src = regions[regionId].image;
+            mapModalImg.src = regions[regionId].image;
             
             state.sessionScore = 0;
             state.wrongScore = 0;
@@ -863,6 +933,7 @@
         }
 
         function showMenu() {
+            closeMapZoom();
             regionOverlay.style.display = 'flex';
             headerMenuBtn.style.visibility = 'hidden';
         }
@@ -912,6 +983,8 @@
             document.getElementById('label-start-2').textContent = t.startTraining;
             document.getElementById('label-start-3').textContent = t.startTraining;
             document.getElementById('label-start-4').textContent = t.startTraining;
+            document.getElementById('map-zoom-badge').textContent = t.zoomIn;
+            document.getElementById('map-modal-hint').textContent = t.zoomOut;
             
             textAnswerInput.placeholder = t.placeholder;
             submitBtn.textContent = t.submit;
