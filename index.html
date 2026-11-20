@@ -146,7 +146,7 @@
                     Select a province or region to begin your cartographic journey. Master the geography of the Netherlands through precision practice.
                 </p>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 flex-1 min-h-0 items-stretch">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-4 flex-1 min-h-0 items-stretch">
                 <!-- West-Nederland -->
                 <div onclick="selectRegion('west')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col">
                     <div class="flex-1 min-h-[120px] lg:min-h-0 overflow-hidden relative">
@@ -250,6 +250,33 @@
                             </div>
                             <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
                                 <span id="label-start-4" class="text-[10px] font-bold uppercase tracking-widest text-primary">Start Training</span>
+                                <span class="material-symbols-outlined text-primary text-lg">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Noord-Europa -->
+                <div onclick="selectRegion('noordeurope')" class="group relative bg-surface-container-lowest rounded-3xl overflow-hidden shadow-[0px_20px_40px_rgba(9,29,46,0.06)] hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col">
+                    <div class="flex-1 min-h-[120px] lg:min-h-0 overflow-hidden relative">
+                        <img src="map-noordeurope.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+                    </div>
+                    <div class="p-4 sm:p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h2 id="label-noordeurope" class="text-lg sm:text-xl font-extrabold tracking-tight text-on-surface">Noord-Europa</h2>
+                                <span class="text-primary-container material-symbols-outlined text-2xl">ac_unit</span>
+                            </div>
+                            <p id="label-noordeurope-desc" class="text-xs sm:text-sm text-on-surface-variant line-clamp-2">Beheers Scandinavië, de Noordse landen en de Baltische staten.</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="flex -space-x-2">
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[8px] font-bold">NO</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[8px] font-bold">SE</div>
+                                <div class="w-6 h-6 rounded-full border-2 border-white bg-surface-container-highest flex items-center justify-center text-[8px] font-bold">FI</div>
+                            </div>
+                            <div class="flex items-center gap-2 group-hover:translate-x-2 transition-transform duration-300">
+                                <span id="label-start-5" class="text-[10px] font-bold uppercase tracking-widest text-primary">Start Training</span>
                                 <span class="material-symbols-outlined text-primary text-lg">arrow_forward</span>
                             </div>
                         </div>
@@ -421,6 +448,7 @@
                 south: "South Netherlands",
                 europe: "Europe",
                 westEurope: "Western Europe",
+                noordEurope: "Northern Europe",
                 menu: "Menu",
                 startTraining: "Start Training",
                 instruction: "Select the correct location from the options below.",
@@ -430,6 +458,7 @@
                 southDesc: "Explore the varied landscapes of Noord-Brabant and Limburg. From river basins to hills.",
                 europeDesc: "Master countries, capitals, waters, and mountains across the European continent.",
                 westEuropeDesc: "Master the United Kingdom, France, Germany, Benelux, and surrounding regions.",
+                noordEuropeDesc: "Master Scandinavia, the Nordic countries, and the Baltic States.",
                 zoomIn: "Enlarge",
                 zoomOut: "Click map to return"
             },
@@ -452,6 +481,7 @@
                 south: "Zuid-Nederland",
                 europe: "Europa",
                 westEurope: "West-Europa",
+                noordEurope: "Noord-Europa",
                 menu: "Menu",
                 startTraining: "Start Training",
                 instruction: "Selecteer de juiste locatie uit de onderstaande opties.",
@@ -461,6 +491,7 @@
                 southDesc: "Verken de gevarieerde landschappen van Noord-Brabant en Limburg. Van rivierbekkens tot heuvels.",
                 europeDesc: "Beheers landen, hoofdsteden, wateren en gebergten op het Europese continent.",
                 westEuropeDesc: "Beheers het Verenigd Koninkrijk, Frankrijk, Duitsland, de Benelux en meer.",
+                noordEuropeDesc: "Beheers Scandinavië, de Noordse landen en de Baltische staten.",
                 zoomIn: "Vergroten",
                 zoomOut: "Klik om te verkleinen"
             },
@@ -483,6 +514,7 @@
                 south: "Güney Hollanda",
                 europe: "Avrupa",
                 westEurope: "Batı Avrupa",
+                noordEurope: "Kuzey Avrupa",
                 menu: "Menü",
                 startTraining: "Eğitime Başla",
                 instruction: "Aşağıdaki seçeneklerden doğru konumu seçin.",
@@ -492,6 +524,7 @@
                 southDesc: "Kuzey Brabant ve Limburg'un çeşitli manzaralarını keşfedin. Nehir yataklarından tepelere kadar.",
                 europeDesc: "Avrupa kıtasındaki ülkeleri, başkentleri, suları ve dağları öğrenin.",
                 westEuropeDesc: "Birleşik Krallık, Fransa, Almanya, Benelüks ve çevre bölgelerde uzmanlaşın.",
+                noordEuropeDesc: "İskandinavya, İskandinav ülkeleri ve Baltık Devletlerini öğrenin.",
                 zoomIn: "Büyüt",
                 zoomOut: "Küçültmek için tıklayın"
             }
@@ -819,6 +852,79 @@
                     { question: { en: "Which major financial city in Germany is marked with FF?", nl: "Welke grote financiële stad in Duitsland is aangegeven met FF?", tr: "Almanya'da finans merkezi olan FF işaretli şehir hangisidir?" }, name: "Frankfurt" },
                     { question: { en: "Which constituent country lies west of England in Great Britain (WA)?", nl: "Welk land ligt ten westen van Engeland op Groot-Brittannië (WA)?", tr: "Büyük Britanya'da İngiltere'nin batısındaki ülke hangisidir (WA)?" }, name: "Wales" }
                 ]
+            },
+            noordeurope: {
+                name: "Noord-Europa",
+                image: "map-noordeurope.jpg",
+                data: [
+                    // Landen
+                    { id: "A", name: "IJsland" },
+                    { id: "B", name: "Noorwegen" },
+                    { id: "C", name: "Zweden" },
+                    { id: "D", name: "Finland" },
+                    { id: "E", name: "Rusland" },
+                    { id: "F", name: "Estland" },
+                    { id: "G", name: "Letland" },
+                    { id: "H", name: "Litouwen" },
+                    { id: "I", name: "Denemarken" },
+
+                    // Hoofdsteden
+                    { id: "1", name: "Oslo" },
+                    { id: "2", name: "Stockholm" },
+                    { id: "3", name: "Helsinki" },
+                    { id: "4", name: "Kopenhagen" },
+
+                    // Steden
+                    { id: "5", name: "Sint-Petersburg" },
+
+                    // Wateren
+                    { id: "a", name: "Noordelijke IJszee" },
+                    { id: "b", name: "Atlantische Oceaan" },
+                    { id: "c", name: "Noordzee" },
+                    { id: "d", name: "Oostzee" },
+
+                    // Gebieden
+                    { id: "J", name: "Scandinavië" },
+
+                    // Plus TOPO
+                    { id: "NK", name: "Noordkaap" },
+                    { id: "LL", name: "Lapland" },
+                    { id: "JL", name: "Jutland" },
+                    { id: "RK", name: "Reykjavik" },
+                    { id: "BE", name: "Bergen" },
+                    { id: "GB", name: "Göteborg" },
+                    { id: "TA", name: "Tallinn" },
+                    { id: "RI", name: "Riga" },
+                    { id: "VI", name: "Vilnius" },
+
+                    // Spatial / Knowledge questions
+                    { question: { en: "What is the capital of Norway (B)?", nl: "Wat is de hoofdstad van Noorwegen (B)?", tr: "Norveç'in (B) başkenti neresidir?" }, name: "Oslo" },
+                    { question: { en: "What is the capital of Sweden (C)?", nl: "Wat is de hoofdstad van Zweden (C)?", tr: "İsveç'in (C) başkenti neresidir?" }, name: "Stockholm" },
+                    { question: { en: "What is the capital of Finland (D)?", nl: "Wat is de hoofdstad van Finland (D)?", tr: "Finlandiya'nın (D) başkenti neresidir?" }, name: "Helsinki" },
+                    { question: { en: "What is the capital of Denmark (I)?", nl: "Wat is de hoofdstad van Denemarken (I)?", tr: "Danimarka'nın (I) başkenti neresidir?" }, name: "Kopenhagen" },
+                    { question: { en: "What is the capital of Iceland (A)?", nl: "Wat is de hoofdstad van IJsland (A)?", tr: "İzlanda'nın (A) başkenti neresidir?" }, name: "Reykjavik" },
+                    { question: { en: "What is the capital of Estonia (F)?", nl: "Wat is de hoofdstad van Estland (F)?", tr: "Estonya'nın (F) başkenti neresidir?" }, name: "Tallinn" },
+                    { question: { en: "What is the capital of Latvia (G)?", nl: "Wat is de hoofdstad van Letland (G)?", tr: "Letonya'nın (G) başkenti neresidir?" }, name: "Riga" },
+                    { question: { en: "What is the capital of Lithuania (H)?", nl: "Wat is de hoofdstad van Litouwen (H)?", tr: "Litvanya'nın (H) başkenti neresidir?" }, name: "Vilnius" },
+                    { question: { en: "Which famous Russian cultural and port city is marked with 5?", nl: "Welke beroemde Russische havenstad is aangegeven met 5?", tr: "Rusya'nın 5 ile gösterilen ünlü liman şehri hangisidir?" }, name: "Sint-Petersburg" },
+                    { question: { en: "Which major Norwegian coastal port city is marked with BE?", nl: "Welke belangrijke Noorse havenstad aan de kust is aangegeven met BE?", tr: "Norveç'in batı kıyısındaki BE işaretli önemli liman şehri hangisidir?" }, name: "Bergen" },
+                    { question: { en: "Which major Swedish port city on the west coast is marked with GB?", nl: "Welke grote Zweedse havenstad aan de westkust is aangegeven met GB?", tr: "İsveç'in batı kıyısındaki GB işaretli büyük liman kenti hangisidir?" }, name: "Göteborg" },
+                    { question: { en: "Which northernmost point of mainland Europe in Norway is marked with NK?", nl: "Welk noordelijkste punt van het Europese vasteland in Noorwegen is aangegeven met NK?", tr: "Avrupa kıtasının en kuzey noktası olan NK işaretli yer neresidir?" }, name: "Noordkaap" },
+                    { question: { en: "Which northern cultural subarctic region is marked with LL?", nl: "Welke noordelijke streek in het uiterste noorden is aangegeven met LL?", tr: "Kuzeydeki LL ile gösterilen Lapon bölgesi neresidir?" }, name: "Lapland" },
+                    { question: { en: "Which peninsula makes up the continental part of Denmark (JL)?", nl: "Welk schiereiland vormt het vasteland van Denemarken (JL)?", tr: "Danimarka'nın anakarasını oluşturan JL işaretli yarımada hangisidir?" }, name: "Jutland" },
+                    { question: { en: "Which large peninsula includes Norway and Sweden (J)?", nl: "Welk groot schiereiland omvat Noorwegen en Zweden (J)?", tr: "Norveç ve İsveç'i kapsayan J işaretli büyük yarımada hangisidir?" }, name: "Scandinavië" },
+                    { question: { en: "Which polar sea lies north of Norway and Russia, marked with a?", nl: "Welke noordelijke poolzee ligt ten noorden van Noorwegen en Rusland (a)?", tr: "İskandinavya'nın kuzeyinde bulunan 'a' işaretli okyanus hangisidir?" }, name: "Noordelijke IJszee" },
+                    { question: { en: "Which large ocean lies west of Norway and around Iceland (b)?", nl: "Welke grote oceaan ligt ten westen van Noorwegen en rond IJsland (b)?", tr: "Norveç'in batısında ve İzlanda çevresinde uzanan büyük okyanus hangisidir (b)?" }, name: "Atlantische Oceaan" },
+                    { question: { en: "Which sea separates Great Britain, Norway, and Denmark (c)?", nl: "Welke zee scheidt Groot-Brittannië, Noorwegen en Denemarken (c)?", tr: "Büyük Britanya, Norveç ve Danimarka arasındaki deniz hangisidir (c)?" }, name: "Noordzee" },
+                    { question: { en: "Which sea lies between Sweden, Finland, and the Baltic states (d)?", nl: "Welke binnenzee ligt tussen Zweden, Finland en de Baltische staten (d)?", tr: "İsveç, Finlandiya ve Baltık ülkeleri arasındaki iç deniz hangisidir (d)?" }, name: "Oostzee" },
+                    { question: { en: "Which Nordic country lies to the west of Sweden (B)?", nl: "Welk Noordse land ligt ten westen van Zweden (B)?", tr: "İsveç'in batısında yer alan İskandinav ülkesi hangisidir (B)?" }, name: "Noorwegen" },
+                    { question: { en: "Which country is located between Sweden and Russia (D)?", nl: "Welk land ligt tussen Zweden en Rusland (D)?", tr: "İsveç ile Rusya arasında yer alan ülke hangisidir (D)?" }, name: "Finland" },
+                    { question: { en: "Which large volcanic island country is located far northwest in the ocean (A)?", nl: "Welk groot vulkanisch eilandland ligt ver in het noordwesten (A)?", tr: "Kuzeybatı okyanusta yer alan volkanik ada ülkesi hangisidir (A)?" }, name: "IJsland" },
+                    { question: { en: "Which country connects Scandinavia directly to Germany (I)?", nl: "Welk land verbindt Scandinavië via het vasteland met Duitsland (I)?", tr: "İskandinavya'yı karadan Almanya'ya bağlayan ülke hangisidir (I)?" }, name: "Denemarken" },
+                    { question: { en: "Which is the northernmost of the three Baltic states (F)?", nl: "Welke van de drie Baltische staten ligt het meest noordelijk (F)?", tr: "Üç Baltık devleti arasında en kuzeyde yer alanı hangisidir (F)?" }, name: "Estland" },
+                    { question: { en: "Which Baltic state is situated between Estonia and Lithuania (G)?", nl: "Welke Baltische staat ligt tussen Estland en Litouwen (G)?", tr: "Estonya ile Litvanya arasında yer alan Baltık ülkesi hangisidir (G)?" }, name: "Letland" },
+                    { question: { en: "Which Baltic state borders Poland to the south (H)?", nl: "Welke Baltische staat grenst in het zuiden aan Polen (H)?", tr: "Güneyinde Polonya ile komşu olan Baltık ülkesi hangisidir (H)?" }, name: "Litouwen" }
+                ]
             }
         };
 
@@ -970,10 +1076,12 @@
             document.getElementById('label-south').textContent = t.south;
             document.getElementById('label-europe').textContent = t.europe;
             document.getElementById('label-westeurope').textContent = t.westEurope;
+            document.getElementById('label-noordeurope').textContent = t.noordEurope;
             document.getElementById('label-west-desc').textContent = t.westDesc;
             document.getElementById('label-south-desc').textContent = t.southDesc;
             document.getElementById('label-europe-desc').textContent = t.europeDesc;
             document.getElementById('label-westeurope-desc').textContent = t.westEuropeDesc;
+            document.getElementById('label-noordeurope-desc').textContent = t.noordEuropeDesc;
             document.getElementById('label-region-metadata').textContent = t.selectRegion.toUpperCase();
             document.getElementById('label-best-hub').textContent = t.best.split(' ')[0].toUpperCase();
             document.getElementById('label-region-desc').textContent = t.regionDesc;
@@ -983,6 +1091,7 @@
             document.getElementById('label-start-2').textContent = t.startTraining;
             document.getElementById('label-start-3').textContent = t.startTraining;
             document.getElementById('label-start-4').textContent = t.startTraining;
+            document.getElementById('label-start-5').textContent = t.startTraining;
             document.getElementById('map-zoom-badge').textContent = t.zoomIn;
             document.getElementById('map-modal-hint').textContent = t.zoomOut;
             
